@@ -1,0 +1,57 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: var(--font-nunito), system-ui, sans-serif;
+  --font-display: var(--font-lora), Georgia, serif;
+  --font-hand: var(--font-caveat), cursive;
+  --font-fun: var(--font-comic), var(--font-nunito), system-ui, sans-serif;
+
+  --color-diho-cream: #fff8f0;
+  --color-page-tan: #f2dfc6;
+  --color-hai-blue: #4a90d9;
+  --color-hai-blue-dark: #1e40af;
+  --color-accent-gold: #f5a623;
+  --color-soft-charcoal: #2d2d2d;
+  --color-warm-pink: #ff6b8a;
+  --color-guide-navy: #16284c;
+}
+
+@layer base {
+  html {
+    @apply min-h-full scroll-smooth bg-page-tan antialiased;
+  }
+
+  body {
+    @apply m-0 min-h-full bg-page-tan font-sans text-soft-charcoal;
+  }
+
+  ::selection {
+    background-color: color-mix(in srgb, var(--color-hai-blue) 35%, transparent);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .hai-glow {
+    box-shadow:
+      0 0 24px color-mix(in srgb, var(--color-hai-blue) 45%, transparent),
+      0 0 48px color-mix(in srgb, var(--color-hai-blue) 20%, transparent);
+  }
+
+  .guide-hai-note::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 18px 18px 0;
+    border-color: transparent color-mix(in srgb, var(--color-hai-blue-dark) 35%, transparent)
+      transparent transparent;
+    border-radius: 0 0 0 2px;
+  }
+}
