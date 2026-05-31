@@ -1,5 +1,6 @@
-import { Img, Section, Text } from '@react-email/components'
+import { Section, Text } from '@react-email/components'
 import type { CSSProperties } from 'react'
+import { EmailCharacterPortrait } from './EmailCharacterPortrait'
 import { EMAIL, EMAIL_FONT } from './email-constants'
 
 type Props = {
@@ -7,21 +8,15 @@ type Props = {
   children: React.ReactNode
 }
 
-/** Hai’s voice — avatar only, no caps label (Ask Hai launcher art). */
+/** Hai’s voice — portrait only, no caps label or speech-bubble art. */
 export function WelcomeHaiSays({ haiImageUrl, children }: Props) {
   return (
     <Section style={box}>
       <table role="presentation" cellPadding={0} cellSpacing={0} style={{ width: '100%' }}>
         <tbody>
           <tr>
-            <td style={{ width: 76, verticalAlign: 'top', paddingRight: 10 }}>
-              <Img
-                src={haiImageUrl}
-                width={64}
-                height={79}
-                alt="Hai"
-                style={{ display: 'block', margin: 0 }}
-              />
+            <td style={{ width: 76, verticalAlign: 'top', paddingRight: 12 }}>
+              <EmailCharacterPortrait src={haiImageUrl} alt="Hai" character="hai" size={64} />
             </td>
             <td style={{ verticalAlign: 'middle' }}>
               <Text style={copy}>{children}</Text>

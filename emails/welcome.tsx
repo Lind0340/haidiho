@@ -1,6 +1,7 @@
-import { Img, Section, Text } from '@react-email/components'
+import { Section, Text } from '@react-email/components'
 import type { CSSProperties } from 'react'
 import { EmailButton } from './components/EmailButton'
+import { EmailCharacterPortrait } from './components/EmailCharacterPortrait'
 import { EmailLayout } from './components/EmailLayout'
 import { WelcomeDihoNote } from './components/WelcomeDihoNote'
 import { WelcomeHaiSays } from './components/WelcomeHaiSays'
@@ -8,6 +9,7 @@ import { WelcomePerkCards } from './components/WelcomePerkCards'
 import {
   bodyText,
   EMAIL,
+  EMAIL_FONT,
   getEmailAssets,
   goldItalic,
   whiteCard,
@@ -58,30 +60,25 @@ export default function WelcomeEmail({ siteUrl, welcomeBack, unsubscribeUrl }: W
           <table role="presentation" cellPadding={0} cellSpacing={0} style={{ margin: '0 auto' }}>
             <tbody>
               <tr>
-                <td style={{ padding: '0 10px', textAlign: 'center', verticalAlign: 'bottom' }}>
-                  <Img
-                    src={assets.hai}
-                    width={72}
-                    height={89}
-                    alt="Hai"
-                    style={{ display: 'inline-block' }}
-                  />
+                <td style={{ padding: '0 14px', textAlign: 'center', verticalAlign: 'middle' }}>
+                  <EmailCharacterPortrait src={assets.hai} alt="Hai" character="hai" size={80} />
                 </td>
-                <td style={{ padding: '0 10px', textAlign: 'center', verticalAlign: 'bottom' }}>
-                  <Img
-                    src={assets.diho}
-                    width={76}
-                    height={67}
-                    alt="DiHo"
-                    style={{ display: 'inline-block' }}
-                  />
+                <td style={{ padding: '0 14px', textAlign: 'center', verticalAlign: 'middle' }}>
+                  <EmailCharacterPortrait src={assets.diho} alt="DiHo" character="diho" size={80} />
                 </td>
               </tr>
             </tbody>
           </table>
+          <Text style={ctaLead}>
+            The strip, the mugs, the board — and two coworkers who are very ready to help you figure
+            this out.
+          </Text>
+          <Text style={ctaSub}>
+            Five minutes. One coffee. Come say hi. ☕
+          </Text>
         </Section>
 
-        <Section style={{ textAlign: 'center', margin: '8px 0 8px' }}>
+        <Section style={{ textAlign: 'center', margin: '16px 0 8px' }}>
           <EmailButton href={assets.site}>Come explore the neighborhood →</EmailButton>
         </Section>
       </Section>
@@ -92,8 +89,28 @@ export default function WelcomeEmail({ siteUrl, welcomeBack, unsubscribeUrl }: W
 const ctaCharacters: CSSProperties = {
   textAlign: 'center',
   margin: '24px 0 4px',
-  padding: '12px 8px 4px',
+  padding: '16px 18px 20px',
   backgroundColor: EMAIL.noteCream,
   borderRadius: '14px',
   border: `1px dashed ${EMAIL.divider}`,
+}
+
+const ctaLead: CSSProperties = {
+  margin: '16px 0 8px',
+  fontSize: '15px',
+  lineHeight: 1.6,
+  fontWeight: 600,
+  color: EMAIL.navy,
+  textAlign: 'center',
+  fontFamily: EMAIL_FONT,
+}
+
+const ctaSub: CSSProperties = {
+  margin: 0,
+  fontSize: '14px',
+  lineHeight: 1.5,
+  fontStyle: 'italic',
+  color: EMAIL.muted,
+  textAlign: 'center',
+  fontFamily: EMAIL_FONT,
 }
