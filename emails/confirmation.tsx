@@ -30,7 +30,11 @@ export default function ConfirmationEmail({ siteUrl, confirmationUrl }: Confirma
           to Hai &amp; DiHo.
         </Text>
 
-        <HaiSaysBox haiAvatarUrl={assets.hai}>
+        <HaiSaysBox
+          haiAvatarUrl={assets.hai}
+          haiWidth={assets.haiWidth}
+          haiHeight={assets.haiHeight}
+        >
           I have been waiting. Not in a weird way. In a welcoming way. ❤️
         </HaiSaysBox>
 

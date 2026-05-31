@@ -1,22 +1,29 @@
 import { Section, Text } from '@react-email/components'
 import type { CSSProperties } from 'react'
-import { EmailCharacterPortrait } from './EmailCharacterPortrait'
+import { EmailPortrait } from './EmailPortrait'
 import { EMAIL, EMAIL_FONT } from './email-constants'
 
 type Props = {
   dihoImageUrl: string
+  dihoWidth: number
+  dihoHeight: number
   children: React.ReactNode
 }
 
-/** DiHo’s note — gold warmth, portrait only (no speech-bubble art). */
-export function WelcomeDihoNote({ dihoImageUrl, children }: Props) {
+export function WelcomeDihoNote({ dihoImageUrl, dihoWidth, dihoHeight, children }: Props) {
   return (
     <Section style={box}>
       <table role="presentation" cellPadding={0} cellSpacing={0} style={{ width: '100%' }}>
         <tbody>
           <tr>
-            <td style={{ width: 76, verticalAlign: 'top', paddingRight: 12 }}>
-              <EmailCharacterPortrait src={dihoImageUrl} alt="DiHo" character="diho" size={64} />
+            <td style={{ width: 80, verticalAlign: 'top', paddingRight: 12 }}>
+              <EmailPortrait
+                src={dihoImageUrl}
+                alt="DiHo"
+                nativeWidth={dihoWidth}
+                nativeHeight={dihoHeight}
+                displayWidth={72}
+              />
             </td>
             <td style={{ verticalAlign: 'middle' }}>
               <Text style={copy}>{children}</Text>

@@ -4,22 +4,32 @@ import { EMAIL, EMAIL_FONT } from './email-constants'
 
 type Props = {
   haiAvatarUrl: string
+  haiWidth?: number
+  haiHeight?: number
   children: React.ReactNode
 }
 
-export function HaiSaysBox({ haiAvatarUrl, children }: Props) {
+export function HaiSaysBox({
+  haiAvatarUrl,
+  haiWidth = 420,
+  haiHeight = 538,
+  children,
+}: Props) {
+  const displayWidth = 56
+  const displayHeight = Math.round((displayWidth * haiHeight) / haiWidth)
+
   return (
     <Section style={box}>
       <table role="presentation" cellPadding={0} cellSpacing={0} style={{ width: '100%' }}>
         <tbody>
           <tr>
-            <td style={{ width: 48, verticalAlign: 'top', paddingRight: 12 }}>
+            <td style={{ width: 64, verticalAlign: 'top', paddingRight: 12 }}>
               <Img
                 src={haiAvatarUrl}
-                width={40}
-                height={40}
+                width={displayWidth}
+                height={displayHeight}
                 alt="Hai"
-                style={{ borderRadius: '50%', display: 'block' }}
+                style={{ display: 'block' }}
               />
             </td>
             <td style={{ verticalAlign: 'top' }}>

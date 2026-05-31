@@ -1,7 +1,7 @@
 import { Section, Text } from '@react-email/components'
 import type { CSSProperties } from 'react'
 import { EmailButton } from './components/EmailButton'
-import { EmailCharacterPortrait } from './components/EmailCharacterPortrait'
+import { EmailPortrait } from './components/EmailPortrait'
 import { EmailLayout } from './components/EmailLayout'
 import { WelcomeDihoNote } from './components/WelcomeDihoNote'
 import { WelcomeHaiSays } from './components/WelcomeHaiSays'
@@ -47,12 +47,20 @@ export default function WelcomeEmail({ siteUrl, welcomeBack, unsubscribeUrl }: W
           That&apos;s it. No spam. No 47 bullet points. I specifically asked.
         </Text>
 
-        <WelcomeHaiSays haiImageUrl={assets.hai}>
+        <WelcomeHaiSays
+          haiImageUrl={assets.hai}
+          haiWidth={assets.haiWidth}
+          haiHeight={assets.haiHeight}
+        >
           I have been waiting. Not in a weird way. In a welcoming way. Also — the newsletter has a
           Spot the Difference strip each week. I find all 5 immediately. ❤️ — Hai
         </WelcomeHaiSays>
 
-        <WelcomeDihoNote dihoImageUrl={assets.diho}>
+        <WelcomeDihoNote
+          dihoImageUrl={assets.diho}
+          dihoWidth={assets.dihoWidth}
+          dihoHeight={assets.dihoHeight}
+        >
           Hai wanted to send daily updates. We discussed it. The answer was no. ❤️ — DiHo
         </WelcomeDihoNote>
 
@@ -60,11 +68,23 @@ export default function WelcomeEmail({ siteUrl, welcomeBack, unsubscribeUrl }: W
           <table role="presentation" cellPadding={0} cellSpacing={0} style={{ margin: '0 auto' }}>
             <tbody>
               <tr>
-                <td style={{ padding: '0 14px', textAlign: 'center', verticalAlign: 'middle' }}>
-                  <EmailCharacterPortrait src={assets.hai} alt="Hai" character="hai" size={80} />
+                <td style={{ padding: '0 14px', textAlign: 'center', verticalAlign: 'bottom' }}>
+                  <EmailPortrait
+                    src={assets.hai}
+                    alt="Hai"
+                    nativeWidth={assets.haiWidth}
+                    nativeHeight={assets.haiHeight}
+                    displayWidth={96}
+                  />
                 </td>
-                <td style={{ padding: '0 14px', textAlign: 'center', verticalAlign: 'middle' }}>
-                  <EmailCharacterPortrait src={assets.diho} alt="DiHo" character="diho" size={80} />
+                <td style={{ padding: '0 14px', textAlign: 'center', verticalAlign: 'bottom' }}>
+                  <EmailPortrait
+                    src={assets.diho}
+                    alt="DiHo"
+                    nativeWidth={assets.dihoWidth}
+                    nativeHeight={assets.dihoHeight}
+                    displayWidth={96}
+                  />
                 </td>
               </tr>
             </tbody>

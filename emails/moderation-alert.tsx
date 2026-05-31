@@ -50,7 +50,11 @@ export default function ModerationAlertEmail({
           <EmailButton href={modUrl}>Review now →</EmailButton>
         </Section>
 
-        <HaiSaysBox haiAvatarUrl={assets.hai}>
+        <HaiSaysBox
+          haiAvatarUrl={assets.hai}
+          haiWidth={assets.haiWidth}
+          haiHeight={assets.haiHeight}
+        >
           I pre-screened these already. My confidence levels are included in the queue. ❤️ — Hai
         </HaiSaysBox>
       </Section>

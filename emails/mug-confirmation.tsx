@@ -36,7 +36,11 @@ export default function MugConfirmationEmail({ siteUrl, memberName }: MugConfirm
           And if it ends up in a strip? Your name goes on it. ❤️
         </Text>
 
-        <HaiSaysBox haiAvatarUrl={assets.hai}>
+        <HaiSaysBox
+          haiAvatarUrl={assets.hai}
+          haiWidth={assets.haiWidth}
+          haiHeight={assets.haiHeight}
+        >
           I have already studied your mug. I have thoughts. Good thoughts. ❤️ — Hai
         </HaiSaysBox>
 

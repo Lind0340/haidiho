@@ -32,6 +32,12 @@ export const EMAIL_LOGO = {
   height: 256,
 } as const
 
+/** Transparent bust portraits for Hai / DiHo in emails (regenerate via scripts/prepare-email-portraits.py). */
+export const EMAIL_PORTRAITS = {
+  hai: { file: 'email/hai-email-portrait.png', width: 420, height: 538 },
+  diho: { file: 'email/diho-email-portrait.png', width: 420, height: 558 },
+} as const
+
 /** Absolute asset URLs for email clients — always a public origin, never localhost. */
 export function getEmailAssets() {
   const base = getEmailSiteUrl()
@@ -39,8 +45,12 @@ export function getEmailAssets() {
     logo: `${base}/images/${EMAIL_LOGO.file}`,
     logoWidth: EMAIL_LOGO.width,
     logoHeight: EMAIL_LOGO.height,
-    hai: `${base}/images/hai-there-chat-icon.png`,
-    diho: `${base}/images/diho-there-chat-icon-v2.png`,
+    hai: `${base}/images/${EMAIL_PORTRAITS.hai.file}`,
+    haiWidth: EMAIL_PORTRAITS.hai.width,
+    haiHeight: EMAIL_PORTRAITS.hai.height,
+    diho: `${base}/images/${EMAIL_PORTRAITS.diho.file}`,
+    dihoWidth: EMAIL_PORTRAITS.diho.width,
+    dihoHeight: EMAIL_PORTRAITS.diho.height,
     site: getEmailLinkUrl(),
   }
 }

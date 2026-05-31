@@ -39,7 +39,11 @@ export default function StoryConfirmationEmail({ siteUrl, name }: StoryConfirmat
           That&apos;s the deal. ❤️ — DiHo
         </Text>
 
-        <HaiSaysBox haiAvatarUrl={assets.hai}>
+        <HaiSaysBox
+          haiAvatarUrl={assets.hai}
+          haiWidth={assets.haiWidth}
+          haiHeight={assets.haiHeight}
+        >
           I have pre-analyzed your story for comic potential. Results are promising. I cannot share
           more at this time. ❤️ — Hai
         </HaiSaysBox>
