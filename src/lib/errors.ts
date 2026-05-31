@@ -5,10 +5,11 @@ export const HaidihoErrors = {
     'Create a free account (or sign in) to post in the neighborhood. Reading is open to everyone. ❤️',
   emptyRoom: 'Nothing here yet. Be the first. DiHo dares you.',
   storySuccess:
-    "Your story is live in the neighborhood! It might still become a strip. ❤️ — Hai",
+    'Thanks for sharing! Your story is in the queue — Wade will review it before it goes on the board. ❤️',
   storyRejected:
-    "Hai couldn't post that one — keep it about AI-at-work and skip anything mean or off-topic. Try again? ❤️",
-  postSuccess: "Posted! Hai gave it a quick look and it's live. ❤️",
+    "Thanks for sharing! We reviewed your post and it wasn't quite right for the neighborhood this time. Feel free to try again. ❤️",
+  postSuccess:
+    'Thanks for sharing! Your post is in the queue — Wade will review it before it goes on the board. ❤️',
   commentSuccess: "Reply is live. Thanks for keeping it human. ❤️",
   notFound: "This doesn't seem to exist. Even COMPLIANCE couldn't find it.",
   rateLimit: 'Slow down! Even Hai needs a moment. ❤️',

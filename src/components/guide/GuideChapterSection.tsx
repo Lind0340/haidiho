@@ -13,31 +13,48 @@ export function GuideChapterSection({ chapter }: Props) {
   return (
     <section
       id={chapter.id}
-      className="scroll-mt-28 overflow-hidden rounded-2xl bg-diho-cream pb-2 pt-14 shadow-[0_8px_28px_rgba(45,45,45,0.07)] first:pt-10 sm:pt-16"
+      className="guide-chapter-sheet scroll-mt-28"
       data-chapter={chapter.number}
     >
-      <header className="relative overflow-hidden rounded-t-xl bg-guide-navy text-diho-cream sm:rounded-t-[14px]">
-        <div
-          className="absolute -right-6 top-0 h-24 w-24 rounded-full bg-hai-blue/20 blur-2xl"
+      <header className="guide-chapter-header relative mt-1">
+        <span
+          className="absolute -left-1 top-2 h-5 w-9 -rotate-6 bg-[#f5e6c8]/95 shadow-sm"
           aria-hidden
         />
-        <div className="relative px-5 pb-14 pt-6 sm:px-8 sm:pb-16 sm:pt-7">
-          <p className={GUIDE_CHAPTER_LABEL}>{chapter.label}</p>
-          <h2 className={cn(GUIDE_CHAPTER_TITLE, 'mt-2 max-w-2xl')}>{chapter.title}</h2>
-          <p className="mt-3 max-w-xl font-[family-name:var(--font-hand)] text-lg font-semibold leading-relaxed text-accent-gold sm:text-xl">
+        <span
+          className="absolute -right-1 top-3 h-5 w-9 rotate-4 bg-[#f5e6c8]/95 shadow-sm"
+          aria-hidden
+        />
+
+        <div className="relative border border-[#c8dff5] border-l-[5px] border-l-hai-blue bg-[#f7fbff] px-4 py-4 sm:px-5 sm:py-5">
+          <p className={cn(GUIDE_CHAPTER_LABEL, 'text-hai-blue')}>{chapter.label}</p>
+
+          <div className="mt-2 flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-4">
+            <div className="flex shrink-0 items-center gap-2 sm:flex-col sm:items-start sm:gap-0">
+              <div className="overflow-hidden rounded-full border-2 border-white bg-white shadow-sm">
+                <GuideAvatar character="diho" size="sm" borderClassName="border-0" />
+              </div>
+              <div className="-ml-2 overflow-hidden rounded-full border-2 border-white bg-hai-blue/20 shadow-sm sm:ml-0 sm:mt-1">
+                <GuideAvatar character="hai" size="sm" borderClassName="border-0" />
+              </div>
+            </div>
+            <h2
+              className={cn(
+                GUIDE_CHAPTER_TITLE,
+                'min-w-0 flex-1 text-[1.65rem] text-guide-navy drop-shadow-none sm:text-[2.15rem]',
+              )}
+            >
+              {chapter.title}
+            </h2>
+          </div>
+
+          <p className="guide-marker-highlight mt-3 font-[family-name:var(--font-hand)] text-lg font-semibold leading-snug text-soft-charcoal sm:text-xl">
             {chapter.subhead}
           </p>
         </div>
-        <div className="absolute bottom-3 right-4 sm:bottom-4 sm:right-6">
-          <GuideAvatar
-            character="diho"
-            size="lg"
-            borderClassName="border-2 border-diho-cream/90 shadow-md"
-          />
-        </div>
       </header>
 
-      <div className="rounded-b-xl bg-diho-cream px-5 py-9 sm:px-8 sm:py-11">
+      <div className="mt-7 pl-1 sm:pl-2">
         <GuideBlocks blocks={chapter.blocks} />
         <GuideComplianceFooter chapterNumber={chapter.number} text={chapter.compliance} />
       </div>

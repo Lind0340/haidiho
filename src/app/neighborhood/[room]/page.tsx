@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { NeighborhoodRoomContent } from '@/components/neighborhood/NeighborhoodRoomContent'
+import { NeighborhoodBulletinBoard } from '@/components/neighborhood/NeighborhoodBulletinBoard'
 import { fetchCommunityPosts } from '@/lib/data/neighborhood'
 import { getRoom, type RoomId } from '@/lib/neighborhood-data'
 import { isRoomId } from '@/lib/neighborhood-routes'
@@ -25,10 +25,9 @@ export default async function NeighborhoodRoomPage({ params }: Props) {
   const room = slug as RoomId
   const supabase = await createServerSupabaseClient()
   const userId = supabase ? (await supabase.auth.getUser()).data.user?.id : null
-
-  const { posts, nextCursor } = await fetchCommunityPosts({ room, userId })
+  const { posts, nextCursor } = await fetchCommunityPosts({ room: 'all', userId })
 
   return (
-    <NeighborhoodRoomContent room={room} initialPosts={posts} initialCursor={nextCursor} />
+    <NeighborhoodBulletinBoard initialPosts={posts} initialCursor={nextCursor} />
   )
 }

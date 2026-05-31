@@ -21,7 +21,11 @@ export function GuideTemplateBox({ content }: Props) {
   }
 
   return (
-    <div className="relative my-10 w-full rounded-xl border-2 border-dashed border-hai-blue bg-[#fffdf8] p-5 pt-12 shadow-[0_4px_14px_rgba(74,144,217,0.08)] sm:p-6 sm:pt-12">
+    <div className="relative my-10 w-full rounded-xl border-2 border-dashed border-hai-blue bg-[#fffdf8] p-5 pt-12 shadow-[0_4px_14px_rgba(74,144,217,0.12)] sm:p-6 sm:pt-12">
+      <span
+        className="absolute -left-1 top-3 h-6 w-10 -rotate-6 bg-[#f5e6c8]/95 shadow-sm"
+        aria-hidden
+      />
       <button
         type="button"
         onClick={copy}

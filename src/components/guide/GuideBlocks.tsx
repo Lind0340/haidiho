@@ -172,7 +172,11 @@ function ParagraphLine({ line }: { line: string }) {
     return <p className={cn(GUIDE_PAREN, 'my-4')}>{trimmed}</p>
   }
   if (isGuidePunchline(trimmed)) {
-    return <p className={cn(GUIDE_BEAT, 'my-7')}>{trimmed}</p>
+    return (
+      <p className={cn(GUIDE_BEAT, 'guide-marker-highlight my-7')}>
+        {trimmed}
+      </p>
+    )
   }
 
   return (
@@ -223,7 +227,7 @@ function Paragraph({ text }: { text: string }) {
 
 export function GuideBlocks({ blocks }: { blocks: GuideBlock[] }) {
   return (
-    <div className="mx-auto max-w-[42rem] space-y-8 text-left after:clear-both after:block after:content-['']">
+    <div className="mx-auto max-w-[44rem] space-y-8 pl-0 text-left after:clear-both after:block after:content-[''] sm:pl-2 lg:pl-4">
       {blocks.map((block, i) => {
         switch (block.type) {
           case 'paragraph':

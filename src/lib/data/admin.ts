@@ -1,5 +1,6 @@
 import { createAdminClient, createServerSupabaseClient } from '@/lib/supabase-server'
 import { publishStoryToNeighborhoodFeed } from '@/lib/data/story-neighborhood'
+import { notifyPostApproved } from '@/lib/emails/notify'
 import type { ModerationQueueItem, UserRole } from '@/types/database'
 
 export async function getUserRole(userId: string): Promise<UserRole | null> {
@@ -28,6 +29,37 @@ export async function fetchPendingModeration() {
     .select('*')
     .eq('status', 'pending')
     .order('created_at', { ascending: true })
+
+  const items = (data ?? []) as ModerationQueueItem[]
+
+  const storyLinkedPostIds = new Set<string>()
+  for (const item of items) {
+    if (item.content_type !== 'post') continue
+    const { data: post } = await admin
+      .from('community_posts')
+      .select('story_submission_id')
+      .eq('id', item.content_id)
+      .maybeSingle()
+    if (post?.story_submission_id) storyLinkedPostIds.add(item.content_id)
+  }
+
+  return items.filter((item) => {
+    if (item.content_type === 'post' && storyLinkedPostIds.has(item.content_id)) return false
+    return true
+  })
+}
+
+export async function fetchAiRejectedModeration(limit = 40) {
+  const admin = createAdminClient()
+  if (!admin) return []
+
+  const { data } = await admin
+    .from('moderation_queue')
+    .select('*')
+    .eq('status', 'rejected')
+    .eq('ai_approved', false)
+    .order('reviewed_at', { ascending: false })
+    .limit(limit)
 
   return (data ?? []) as ModerationQueueItem[]
 }
@@ -61,6 +93,10 @@ export async function approveModerationItem(item: ModerationQueueItem, moderator
       reviewed_at: new Date().toISOString(),
     })
     .eq('id', item.id)
+
+  if (item.content_type === 'post') {
+    void notifyPostApproved(item)
+  }
 }
 
 export async function rejectModerationItem(

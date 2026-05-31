@@ -413,7 +413,7 @@ export function NeighborhoodRoomContent({ room, initialPosts, initialCursor }: P
         type="button"
         onClick={() => void openSubmitStory()}
         className={cn(
-          'fixed bottom-24 right-4 z-50 rounded-full px-5 py-3 font-[family-name:var(--font-hand)] text-lg font-bold transition-transform hover:-translate-y-0.5 lg:hidden',
+          'safe-fab-bottom fixed right-3 z-50 max-w-[calc(100vw-1.5rem)] touch-manipulation rounded-full px-4 py-3.5 font-[family-name:var(--font-hand)] text-base font-bold transition-transform hover:-translate-y-0.5 sm:right-4 sm:px-5 sm:text-lg lg:hidden',
           roomMeta.submitFabClass,
           roomMeta.id === 'help_desk' ? 'text-soft-charcoal' : 'text-diho-cream',
         )}

@@ -34,6 +34,8 @@ create table if not exists public.profiles (
     check (role in ('member', 'moderator', 'admin')),
   mug_submitted boolean not null default false,
   story_submitted boolean not null default false,
+  terms_agreed boolean not null default false,
+  terms_agreed_at timestamptz,
   joined_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -181,6 +183,8 @@ create table if not exists public.mug_submissions (
   is_featured boolean not null default false,
   featured_week date,
   appeared_in_strip_id uuid references public.strips(id) on delete set null,
+  terms_agreed boolean not null default false,
+  terms_agreed_at timestamptz,
   created_at timestamptz not null default now()
 );
 
@@ -201,6 +205,8 @@ create table if not exists public.story_submissions (
     check (status in ('pending', 'approved', 'turned_into_strip', 'rejected')),
   turned_into_strip_id uuid references public.strips(id) on delete set null,
   moderator_notes text,
+  terms_agreed boolean not null default false,
+  terms_agreed_at timestamptz,
   created_at timestamptz not null default now()
 );
 
@@ -220,6 +226,7 @@ create table if not exists public.newsletter_subscribers (
   id uuid primary key default gen_random_uuid(),
   email text unique not null,
   first_name text,
+  unsubscribe_token uuid unique default gen_random_uuid(),
   status text not null default 'active'
     check (status in ('active', 'unsubscribed')),
   source text default 'say_haidiho'
@@ -238,6 +245,33 @@ create table if not exists public.newsletter_issues (
   featured_mug_id uuid references public.mug_submissions(id) on delete set null,
   featured_post_id uuid references public.community_posts(id) on delete set null,
   tip_of_week text,
+  issue_date date,
+  opening_line text,
+  strip_site_image_url text,
+  strip_newsletter_image_url text,
+  strip_page_url text,
+  difference_1 text,
+  difference_2 text,
+  difference_3 text,
+  difference_4 text,
+  difference_5 text,
+  mug_image_url text,
+  mug_member_name text,
+  mug_story text,
+  mug_page_url text,
+  neighborhood_excerpt text,
+  neighborhood_author text,
+  neighborhood_room text,
+  neighborhood_page_url text,
+  featured_post_ids jsonb default '[]'::jsonb,
+  newsletter_strip_url text,
+  mug_member_title text,
+  exclusive_type text
+    check (exclusive_type is null or exclusive_type in (
+      'back_channel', 'hai_entry', 'compliance', 'derek', 'bob'
+    )),
+  exclusive_content text,
+  send_failures jsonb default '[]'::jsonb,
   status text not null default 'draft'
     check (status in ('draft', 'scheduled', 'sent')),
   scheduled_at timestamptz,
@@ -386,6 +420,12 @@ create table if not exists public.moderation_queue (
   moderator_id uuid references public.profiles(id) on delete set null,
   moderator_notes text,
   reviewed_at timestamptz,
+  ai_approved boolean,
+  ai_confidence text check (ai_confidence is null or ai_confidence in ('high', 'medium', 'low')),
+  ai_reason text,
+  ai_flags jsonb default '[]'::jsonb,
+  ai_pre_approved boolean not null default false,
+  needs_human_review boolean not null default false,
   created_at timestamptz not null default now()
 );
 

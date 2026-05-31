@@ -32,6 +32,11 @@ export function MugPolaroid({ entry, isFeatured }: MugPolaroidProps) {
         className="h-auto w-full drop-shadow-[0_10px_18px_rgba(45,45,45,0.22)]"
         sizes="(max-width: 640px) 44vw, 141px"
       />
+      {entry.mugLove && (
+        <p className="mt-2 max-w-[141px] text-center text-[11px] font-medium italic leading-snug text-soft-charcoal/75">
+          &ldquo;{entry.mugLove}&rdquo;
+        </p>
+      )}
     </article>
   )
 }

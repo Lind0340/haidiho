@@ -2,7 +2,8 @@ import { createServerSupabaseClient } from '@/lib/supabase-server'
 import { fetchCharacterResponsesForPosts } from '@/lib/data/character-responses'
 import type { PostWithProfile, RoomId, RoomStats } from '@/types/database'
 import { postRowToNeighborhood } from '@/lib/data/neighborhood-map'
-import type { NeighborhoodPost } from '@/lib/neighborhood-data'
+import { BOARD_FILL_TARGET } from '@/lib/neighborhood-bulletin'
+import { SEED_POSTS, type NeighborhoodPost } from '@/lib/neighborhood-data'
 
 export { postRowToNeighborhood, PAGE_SIZE } from '@/lib/data/neighborhood-map'
 
@@ -110,7 +111,11 @@ export async function fetchCommunityPosts(opts: {
   }
 
   if (!data?.length) {
-    return { posts: [], nextCursor: null }
+    const posts = SEED_POSTS.slice(0, BOARD_FILL_TARGET).map((seed) => ({
+      ...seed,
+      characterResponses: [] as NeighborhoodPost['characterResponses'],
+    }))
+    return { posts, nextCursor: null }
   }
 
   let likedSet = new Set<string>()
@@ -129,13 +134,25 @@ export async function fetchCommunityPosts(opts: {
   const postIds = (data as PostWithProfile[]).map((r) => r.id)
   const characterMap = await fetchCharacterResponsesForPosts(postIds)
 
-  const posts = (data as PostWithProfile[]).map((row) => {
+  let posts = (data as PostWithProfile[]).map((row) => {
     const mapped = postRowToNeighborhood(row, likedSet.has(row.id))
     return {
       ...mapped,
       characterResponses: characterMap.get(row.id) ?? [],
     }
   })
+
+  if (posts.length < BOARD_FILL_TARGET) {
+    const ids = new Set(posts.map((p) => p.id))
+    for (const seed of SEED_POSTS) {
+      if (posts.length >= BOARD_FILL_TARGET) break
+      if (!ids.has(seed.id)) {
+        posts.push({ ...seed, characterResponses: [] })
+        ids.add(seed.id)
+      }
+    }
+    posts.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+  }
 
   const nextCursor = data.length === limit ? data[data.length - 1]!.created_at : null
   return { posts, nextCursor }

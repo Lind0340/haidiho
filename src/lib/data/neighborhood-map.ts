@@ -27,6 +27,7 @@ export function postRowToNeighborhood(
     likes: row.like_count,
     commentsCount: row.comment_count,
     createdAt: row.created_at,
+    isFeatured: row.is_featured ?? false,
     status: row.status,
     avatarUrl: profiles?.avatar_url ?? null,
     likedByUser,

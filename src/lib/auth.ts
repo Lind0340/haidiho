@@ -3,7 +3,12 @@
 import { createClient } from '@/lib/supabase'
 import type { UserRole } from '@/types/database'
 
-export async function signUp(email: string, password: string, username: string) {
+export async function signUp(
+  email: string,
+  password: string,
+  username: string,
+  termsAgreed?: boolean,
+) {
   const supabase = createClient()
   if (!supabase) throw new Error('Supabase not configured')
 
@@ -21,10 +26,13 @@ export async function signUp(email: string, password: string, username: string) 
   if (error) throw error
 
   if (data.user) {
+    const now = termsAgreed ? new Date().toISOString() : null
     await supabase.from('profiles').upsert({
       id: data.user.id,
       username: handle,
       display_name: `@${handle}`,
+      terms_agreed: !!termsAgreed,
+      terms_agreed_at: now,
     })
   }
 

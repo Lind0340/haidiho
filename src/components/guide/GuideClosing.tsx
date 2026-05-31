@@ -6,10 +6,10 @@ import { cn } from '@/lib/utils'
 
 export function GuideClosing() {
   return (
-    <section className="border-t-2 border-[#ead8c2] bg-[#fff6e8] px-5 py-12 sm:px-10 sm:py-14">
+    <section className="relative z-10 mt-14 border-t border-dashed border-[#d4c4a8] pt-10">
       <div className="mx-auto max-w-3xl text-center">
         <FilledHeart className="text-3xl" />
-        <h2 className="mt-3 font-sans text-3xl font-extrabold text-guide-navy sm:text-4xl">
+        <h2 className="mt-3 font-[family-name:var(--font-hand)] text-3xl font-bold text-guide-navy sm:text-4xl">
           You read the whole guide
         </h2>
         <p

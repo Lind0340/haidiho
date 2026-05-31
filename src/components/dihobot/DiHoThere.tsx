@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import Image from 'next/image'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { HaiMessageContent } from '@/components/haibot/HaiMessageContent'
+import { useChatLauncherPlacement } from '@/hooks/use-chat-launcher-placement'
 import { cn } from '@/lib/utils'
 
 type Message = { role: 'user' | 'assistant'; content: string }
@@ -23,6 +24,7 @@ function formatMessageForClipboard(msg: Message) {
 }
 
 export function DiHoThere() {
+  const launcherPlacement = useChatLauncherPlacement('left')
   const [open, setOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([
     { role: 'assistant', content: GREETING },
@@ -261,7 +263,7 @@ export function DiHoThere() {
           width={CHAT_ICON_WIDTH}
           height={CHAT_ICON_HEIGHT}
           unoptimized
-          className="h-[76px] w-auto object-contain drop-shadow-[0_8px_18px_rgba(45,45,45,0.22)] sm:h-[84px]"
+          className="h-[4.25rem] w-auto object-contain drop-shadow-[0_8px_18px_rgba(45,45,45,0.22)] sm:h-[84px]"
           sizes="84px"
           priority
         />

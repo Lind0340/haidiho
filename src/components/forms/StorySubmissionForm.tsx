@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { LegalLink, TermsCheckbox } from '@/components/forms/TermsCheckbox'
 import { NEIGHBORHOOD_ROOMS } from '@/lib/neighborhood-data'
 import type { RoomId } from '@/types/database'
 import { HaidihoErrors } from '@/lib/errors'
@@ -13,6 +14,7 @@ export function StorySubmissionForm() {
   const [busy, setBusy] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [termsAgreed, setTermsAgreed] = useState(false)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -24,7 +26,13 @@ export function StorySubmissionForm() {
       const res = await fetch('/api/stories', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, room, story_content: story }),
+        body: JSON.stringify({
+          name,
+          email,
+          room,
+          story_content: story,
+          terms_agreed: true,
+        }),
       })
       const data = await res.json()
       if (!res.ok) setError(data.error ?? HaidihoErrors.generic)
@@ -86,11 +94,18 @@ export function StorySubmissionForm() {
           className="mt-1 w-full resize-y rounded-lg border border-[#ead8c2] bg-diho-cream px-3 py-2 text-sm leading-relaxed"
         />
       </label>
+      <TermsCheckbox
+        id="story-terms-strip"
+        checked={termsAgreed}
+        onChange={setTermsAgreed}
+      >
+        I have read and agree to the <LegalLink href="/story-terms">Story Submission Terms</LegalLink>
+      </TermsCheckbox>
       {error && <p className="mt-2 text-sm font-semibold text-warm-pink">{error}</p>}
       {message && <p className="mt-2 text-sm font-bold text-hai-blue">{message}</p>}
       <button
         type="submit"
-        disabled={busy}
+        disabled={busy || !termsAgreed}
         className="mt-4 w-full rounded-xl bg-hai-blue px-4 py-3 font-[family-name:var(--font-hand)] text-xl font-bold text-diho-cream disabled:opacity-60"
       >
         {busy ? 'Sending…' : 'Submit Your Story ❤️'}

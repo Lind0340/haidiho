@@ -8,7 +8,7 @@ const INTRO_ART_HEIGHT = 228
 
 export function MugWallIntro() {
   return (
-    <aside className="relative overflow-visible rounded-[20px] border border-[#ead8c2] bg-[#fff6e8] px-6 pb-6 pt-5 shadow-[0_12px_26px_rgba(45,45,45,0.08)]">
+    <aside className="relative overflow-visible rounded-[20px] border border-[#ead8c2] bg-[#fff6e8] px-4 pb-6 pt-5 shadow-[0_12px_26px_rgba(45,45,45,0.08)] sm:px-6">
       <Image
         src={INTRO_ART}
         alt="the mug wall — Real mugs. Real people. Real conversations."
@@ -37,7 +37,7 @@ export function MugWallIntro() {
       <div className="mt-4 flex justify-center">
         <Link
           href="/say-haidiho"
-          className="inline-flex min-w-[220px] items-center justify-center gap-2 rounded-xl bg-[#0867e8] px-6 py-3.5 text-lg font-extrabold text-white shadow-[0_8px_0_rgba(30,64,175,0.35)] transition-transform hover:-translate-y-0.5 active:translate-y-0"
+          className="inline-flex min-h-[3rem] w-full max-w-[280px] items-center justify-center gap-2 rounded-xl bg-[#0867e8] px-6 py-3.5 text-base font-extrabold text-white shadow-[0_8px_0_rgba(30,64,175,0.35)] transition-transform hover:-translate-y-0.5 active:translate-y-0 sm:min-w-[220px] sm:w-auto sm:text-lg"
         >
           Add My Mug to the Wall
           <span aria-hidden>☕</span>

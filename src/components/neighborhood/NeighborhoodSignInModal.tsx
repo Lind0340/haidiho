@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { LegalLink, TermsCheckbox } from '@/components/forms/TermsCheckbox'
 import { signIn, signUp } from '@/lib/auth'
 import { createClient } from '@/lib/supabase'
 import { cn } from '@/lib/utils'
@@ -52,11 +53,13 @@ export function NeighborhoodSignInModal({
   const [authMode, setAuthMode] = useState<'signin' | 'signup'>(defaultMode)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [termsAgreed, setTermsAgreed] = useState(false)
 
   useEffect(() => {
     if (!open) return
     setAuthMode(defaultMode)
     setError(null)
+    setTermsAgreed(false)
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose()
     }
@@ -120,7 +123,7 @@ export function NeighborhoodSignInModal({
       aria-labelledby="neighborhood-signin-title"
     >
       <button type="button" className="absolute inset-0" aria-label="Close" onClick={onClose} />
-      <div className="relative z-10 w-full max-w-md rounded-[20px] border border-[#ead8c2] bg-[#fff6e8] p-5 shadow-[0_16px_40px_rgba(45,45,45,0.2)] sm:p-6">
+      <div className="relative z-10 max-h-[min(90vh,100dvh)] w-full max-w-md overflow-y-auto rounded-t-[20px] border border-[#ead8c2] bg-[#fff6e8] p-5 shadow-[0_16px_40px_rgba(45,45,45,0.2)] sm:max-h-none sm:rounded-[20px] sm:p-6">
         <h2
           id="neighborhood-signin-title"
           className="font-[family-name:var(--font-hand)] text-2xl font-bold text-soft-charcoal"
@@ -128,8 +131,7 @@ export function NeighborhoodSignInModal({
           Join the neighborhood
         </h2>
         <p className="mt-2 text-sm font-semibold leading-relaxed text-soft-charcoal/80">
-          Anyone can read the feed. Create a free account once, then sign in anytime to post,
-          like, or comment. ❤️
+          Join the neighborhood to pin your own stories and like others. ❤️
         </p>
 
         <form onSubmit={handleAuth} className="mt-5 space-y-3">
@@ -184,10 +186,20 @@ export function NeighborhoodSignInModal({
               className="mt-1 w-full rounded-lg border border-[#ead8c2] bg-diho-cream px-3 py-2 text-sm font-medium outline-none focus:border-hai-blue"
             />
           </label>
+          {authMode === 'signup' && (
+            <TermsCheckbox
+              id="neighborhood-signup-terms"
+              checked={termsAgreed}
+              onChange={setTermsAgreed}
+            >
+              I agree to the <LegalLink href="/terms">Terms of Service</LegalLink> and{' '}
+              <LegalLink href="/privacy">Privacy Policy</LegalLink>
+            </TermsCheckbox>
+          )}
           {error && <p className="text-sm font-semibold text-warm-pink">{error}</p>}
           <button
             type="submit"
-            disabled={busy}
+            disabled={busy || (authMode === 'signup' && !termsAgreed)}
             className="w-full rounded-xl bg-warm-pink px-4 py-3 font-[family-name:var(--font-hand)] text-xl font-bold text-diho-cream shadow-[0_6px_0_rgba(180,60,90,0.35)] disabled:opacity-60"
           >
             {busy ? 'One sec…' : authMode === 'signup' ? 'Create account' : 'Sign in'}

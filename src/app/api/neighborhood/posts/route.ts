@@ -1,5 +1,5 @@
 import { getRequestUser } from '@/lib/api-auth'
-import { moderateAndApply } from '@/lib/data/ai-moderation'
+import { prescreenCommunitySubmission } from '@/lib/data/ai-moderation'
 import { createAdminClient, createServerSupabaseClient } from '@/lib/supabase-server'
 import {
   fetchCommunityPosts,
@@ -99,7 +99,7 @@ export async function POST(request: Request) {
     const admin = createAdminClient()
     if (admin) {
       try {
-        const verdict = await moderateAndApply({
+        const verdict = await prescreenCommunitySubmission({
           contentType: 'post',
           contentId: data.id,
           content,

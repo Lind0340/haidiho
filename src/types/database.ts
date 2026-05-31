@@ -17,6 +17,8 @@ export type Profile = {
   role: UserRole
   mug_submitted: boolean
   story_submitted: boolean
+  terms_agreed: boolean
+  terms_agreed_at: string | null
   joined_at: string
   updated_at: string
 }
@@ -89,6 +91,8 @@ export type MugSubmission = {
   is_featured: boolean
   featured_week: string | null
   appeared_in_strip_id: string | null
+  terms_agreed: boolean
+  terms_agreed_at: string | null
   created_at: string
 }
 
@@ -103,6 +107,8 @@ export type StorySubmission = {
   status: StoryStatus
   turned_into_strip_id: string | null
   moderator_notes: string | null
+  terms_agreed: boolean
+  terms_agreed_at: string | null
   created_at: string
 }
 
@@ -110,10 +116,55 @@ export type NewsletterSubscriber = {
   id: string
   email: string
   first_name: string | null
+  unsubscribe_token: string | null
   status: NewsletterStatus
   source: string | null
   subscribed_at: string
   unsubscribed_at: string | null
+}
+
+export type NewsletterIssueStatus = 'draft' | 'scheduled' | 'sent'
+
+export type NewsletterIssue = {
+  id: string
+  issue_number: number
+  title: string
+  subject_line: string | null
+  preview_text: string | null
+  featured_strip_id: string | null
+  featured_mug_id: string | null
+  featured_post_id: string | null
+  tip_of_week: string | null
+  issue_date: string | null
+  opening_line: string | null
+  strip_site_image_url: string | null
+  strip_newsletter_image_url: string | null
+  strip_page_url: string | null
+  difference_1: string | null
+  difference_2: string | null
+  difference_3: string | null
+  difference_4: string | null
+  difference_5: string | null
+  mug_image_url: string | null
+  mug_member_name: string | null
+  mug_story: string | null
+  mug_page_url: string | null
+  neighborhood_excerpt: string | null
+  neighborhood_author: string | null
+  neighborhood_room: string | null
+  neighborhood_page_url: string | null
+  featured_post_ids: string[] | null
+  newsletter_strip_url: string | null
+  mug_member_title: string | null
+  exclusive_type: 'back_channel' | 'hai_entry' | 'compliance' | 'derek' | 'bob' | null
+  exclusive_content: string | null
+  send_failures: { email: string; error: string }[] | null
+  status: NewsletterIssueStatus
+  scheduled_at: string | null
+  sent_at: string | null
+  subscriber_count: number | null
+  open_rate: number | null
+  created_at: string
 }
 
 export type ModerationQueueItem = {
@@ -125,6 +176,12 @@ export type ModerationQueueItem = {
   moderator_notes: string | null
   reviewed_at: string | null
   created_at: string
+  ai_approved?: boolean | null
+  ai_confidence?: 'high' | 'medium' | 'low' | null
+  ai_reason?: string | null
+  ai_flags?: string[] | null
+  ai_pre_approved?: boolean
+  needs_human_review?: boolean
 }
 
 export type SiteSetting = {
@@ -208,7 +265,11 @@ export type Database = {
       moderation_queue: { Row: ModerationQueueItem; Insert: Partial<ModerationQueueItem>; Update: Partial<ModerationQueueItem> }
       site_settings: { Row: SiteSetting; Insert: Partial<SiteSetting>; Update: Partial<SiteSetting> }
       featured_content: { Row: FeaturedContent; Insert: Partial<FeaturedContent>; Update: Partial<FeaturedContent> }
-      newsletter_issues: { Row: Record<string, unknown>; Insert: Record<string, unknown>; Update: Record<string, unknown> }
+      newsletter_issues: {
+        Row: NewsletterIssue
+        Insert: Partial<NewsletterIssue> & { issue_number: number; title: string }
+        Update: Partial<NewsletterIssue>
+      }
       products: { Row: Record<string, unknown>; Insert: Record<string, unknown>; Update: Record<string, unknown> }
     }
     Views: Record<string, never>

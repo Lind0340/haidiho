@@ -30,7 +30,7 @@ export function StripModal({ strip, onClose }: StripModalProps) {
     <AnimatePresence>
       {strip && (
         <motion.div
-          className="fixed inset-0 z-[80] flex items-center justify-center p-3 sm:p-6"
+          className="fixed inset-0 z-[80] flex items-end justify-center p-0 sm:items-center sm:p-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -46,7 +46,7 @@ export function StripModal({ strip, onClose }: StripModalProps) {
           />
 
           <motion.div
-            className="relative z-10 flex max-h-[92vh] w-full max-w-4xl flex-col overflow-hidden rounded-[20px] border border-[#ead8c2] bg-[#fff6e8] shadow-2xl"
+            className="relative z-10 flex max-h-[min(96vh,100dvh)] w-full max-w-4xl flex-col overflow-hidden rounded-t-[20px] border border-[#ead8c2] bg-[#fff6e8] shadow-2xl sm:max-h-[92vh] sm:rounded-[20px]"
             initial={{ opacity: 0, y: 24, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.98 }}

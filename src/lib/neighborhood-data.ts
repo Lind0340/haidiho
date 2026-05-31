@@ -26,6 +26,7 @@ export type NeighborhoodPost = {
   likes: number
   commentsCount: number
   createdAt: string
+  isFeatured?: boolean
   status?: 'pending' | 'approved' | 'rejected'
   characterResponses?: CharacterResponseView[]
 }
@@ -216,6 +217,194 @@ export const SEED_POSTS: NeighborhoodPost[] = [
     likes: 52,
     commentsCount: 13,
     createdAt: hoursAgo(15),
+    status: 'approved',
+  },
+  {
+    id: 'seed-wc-4',
+    room: 'water_cooler',
+    username: '@RemoteRita',
+    content:
+      'Told my AI to "keep it casual." It added "per my last email" to a Slack message to my spouse.',
+    likes: 28,
+    commentsCount: 4,
+    createdAt: hoursAgo(11),
+    status: 'approved',
+    isFeatured: true,
+  },
+  {
+    id: 'seed-wc-5',
+    room: 'water_cooler',
+    username: '@DaveInDenver',
+    content: 'My AI autocorrected "quarterly review" to "existential dread." HR noticed.',
+    likes: 19,
+    commentsCount: 3,
+    createdAt: hoursAgo(14),
+    status: 'approved',
+  },
+  {
+    id: 'seed-wc-6',
+    room: 'water_cooler',
+    username: '@LaughingLiz',
+    content:
+      'It drafted a thank-you note that thanked me for thanking myself. Very on-brand for 2025.',
+    likes: 44,
+    commentsCount: 7,
+    createdAt: hoursAgo(18),
+    status: 'approved',
+  },
+  {
+    id: 'seed-wc-7',
+    room: 'water_cooler',
+    username: '@BenInBoston',
+    content:
+      'Asked for a short bio. Got six paragraphs and a mission statement for a nonprofit I don\'t run.',
+    likes: 33,
+    commentsCount: 6,
+    createdAt: hoursAgo(22),
+    status: 'approved',
+  },
+  {
+    id: 'seed-tr-4',
+    room: 'training_room',
+    username: '@CalendarChris',
+    content:
+      'I feed mine three standing meetings a week as context. It now suggests agenda items before humans do.',
+    likes: 71,
+    commentsCount: 10,
+    createdAt: hoursAgo(7),
+    status: 'approved',
+  },
+  {
+    id: 'seed-tr-5',
+    room: 'training_room',
+    username: '@NinaNotes',
+    content:
+      'Start every prompt with "You are my coworker, not a textbook." Sounds obvious. Works shockingly well.',
+    likes: 58,
+    commentsCount: 8,
+    createdAt: hoursAgo(10),
+    status: 'approved',
+  },
+  {
+    id: 'seed-tr-6',
+    room: 'training_room',
+    username: '@OpsOmar',
+    content:
+      'Screenshot your best outputs and say "match this energy." Mine stopped writing like a press release.',
+    likes: 64,
+    commentsCount: 11,
+    createdAt: hoursAgo(16),
+    status: 'approved',
+    isFeatured: true,
+  },
+  {
+    id: 'seed-tr-7',
+    room: 'training_room',
+    username: '@WriterWren',
+    content:
+      'Weekly "what I learned" log → mine predicts blockers before standup. Spooky. Useful.',
+    likes: 49,
+    commentsCount: 5,
+    createdAt: hoursAgo(20),
+    status: 'approved',
+  },
+  {
+    id: 'seed-hd-4',
+    room: 'help_desk',
+    username: '@StarterSam',
+    content:
+      'How do I stop it from inventing policies my company definitely does not have?',
+    likes: 41,
+    commentsCount: 14,
+    createdAt: hoursAgo(6),
+    status: 'approved',
+  },
+  {
+    id: 'seed-hd-5',
+    room: 'help_desk',
+    username: '@ManagerMo',
+    content:
+      'Team wants one shared AI voice. Do we train one profile or fight about it forever?',
+    likes: 36,
+    commentsCount: 9,
+    createdAt: hoursAgo(13),
+    status: 'approved',
+  },
+  {
+    id: 'seed-hd-6',
+    room: 'help_desk',
+    username: '@QuietQuinn',
+    content:
+      'Mine adds exclamation points to everything. I sound like a golden retriever. Help.',
+    likes: 27,
+    commentsCount: 6,
+    createdAt: hoursAgo(19),
+    status: 'approved',
+  },
+  {
+    id: 'seed-wc-8',
+    room: 'water_cooler',
+    username: '@JamieJokes',
+    content:
+      'It summarized my inbox as "mostly fine." That\'s not a KPI, ChatGPT. That\'s a vibe.',
+    likes: 22,
+    commentsCount: 2,
+    createdAt: hoursAgo(25),
+    status: 'approved',
+  },
+  {
+    id: 'seed-tr-8',
+    room: 'training_room',
+    username: '@PatriciaPDX',
+    content:
+      'Paste your job description once a month. Mine stopped guessing I\'m in sales when I\'m in support.',
+    likes: 53,
+    commentsCount: 7,
+    createdAt: hoursAgo(24),
+    status: 'approved',
+  },
+  {
+    id: 'seed-hd-7',
+    room: 'help_desk',
+    username: '@AlexAustin',
+    content:
+      'Is it normal that mine apologizes three times before answering a yes/no question?',
+    likes: 48,
+    commentsCount: 12,
+    createdAt: hoursAgo(21),
+    status: 'approved',
+  },
+  {
+    id: 'seed-wc-9',
+    room: 'water_cooler',
+    username: '@ChrisChicago',
+    content:
+      'My AI called a spreadsheet "a tapestry of human ambition." I just needed totals.',
+    likes: 61,
+    commentsCount: 9,
+    createdAt: hoursAgo(28),
+    status: 'approved',
+  },
+  {
+    id: 'seed-tr-9',
+    room: 'training_room',
+    username: '@HelenHaiFan',
+    content:
+      'Give it names for drafts: "messy draft" vs "send to boss." Stops the perfection spiral.',
+    likes: 77,
+    commentsCount: 13,
+    createdAt: hoursAgo(26),
+    status: 'approved',
+  },
+  {
+    id: 'seed-hd-8',
+    room: 'help_desk',
+    username: '@TaylorTampa',
+    content:
+      'Confidential docs in prompts — what\'s the line? Our IT guy said "please don\'t."',
+    likes: 34,
+    commentsCount: 15,
+    createdAt: hoursAgo(30),
     status: 'approved',
   },
 ]

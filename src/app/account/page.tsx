@@ -14,7 +14,7 @@ export default async function AccountPage() {
   const { data: profile } = await supabase.from('profiles').select('*').eq('id', user.id).single()
 
   return (
-    <div className="mx-auto max-w-lg px-4 py-16">
+    <div className="mx-auto max-w-lg px-4 py-10 sm:py-16">
       <h1 className="font-[family-name:var(--font-hand)] text-4xl font-bold text-soft-charcoal">
         Your account
       </h1>

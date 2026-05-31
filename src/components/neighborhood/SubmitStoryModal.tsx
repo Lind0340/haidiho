@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { LegalLink, TermsCheckbox } from '@/components/forms/TermsCheckbox'
 import { authFetch } from '@/lib/auth-fetch'
 import { NEIGHBORHOOD_ROOMS, type RoomId } from '@/lib/neighborhood-data'
 import { HaidihoErrors } from '@/lib/errors'
@@ -24,11 +25,13 @@ export function SubmitStoryModal({
   const [story, setStory] = useState('')
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [termsAgreed, setTermsAgreed] = useState(false)
 
   useEffect(() => {
     if (!open) return
     if (defaultRoom) setRoom(defaultRoom)
     setError(null)
+    setTermsAgreed(false)
   }, [open, defaultRoom])
 
   useEffect(() => {
@@ -55,6 +58,7 @@ export function SubmitStoryModal({
           story: story.trim(),
           story_content: story.trim(),
           room,
+          terms_agreed: true,
         }),
       })
       const data = await res.json().catch(() => ({}))
@@ -130,6 +134,14 @@ export function SubmitStoryModal({
               className="mt-1 w-full resize-y rounded-lg border border-[#ead8c2] bg-diho-cream px-3 py-2 text-sm font-medium leading-relaxed outline-none focus:border-hai-blue"
             />
           </label>
+          <TermsCheckbox
+            id="story-terms-modal"
+            checked={termsAgreed}
+            onChange={setTermsAgreed}
+          >
+            I have read and agree to the{' '}
+            <LegalLink href="/story-terms">Story Submission Terms</LegalLink>
+          </TermsCheckbox>
           {error && <p className="text-sm font-semibold text-warm-pink">{error}</p>}
           <div className="flex gap-2 pt-1">
             <button
@@ -141,7 +153,7 @@ export function SubmitStoryModal({
             </button>
             <button
               type="submit"
-              disabled={busy}
+              disabled={busy || !termsAgreed}
               className="flex-1 rounded-xl bg-hai-blue px-4 py-3 font-[family-name:var(--font-hand)] text-xl font-bold text-diho-cream shadow-[0_6px_0_rgba(30,64,175,0.3)] disabled:opacity-60"
             >
               {busy ? 'Dropping…' : 'Drop It In ❤️'}

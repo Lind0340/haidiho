@@ -85,7 +85,7 @@ export function PostCard({ post, liked, onLike, onReply, hideRoomBadge }: Props)
           type="button"
           onClick={onLike}
           className={cn(
-            'inline-flex items-center gap-1.5 rounded-lg px-2 py-1 text-sm font-bold transition-colors',
+            'inline-flex min-h-[2.75rem] items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-bold transition-colors touch-manipulation',
             liked
               ? 'text-warm-pink'
               : 'text-soft-charcoal/70 hover:bg-warm-pink/10 hover:text-warm-pink',
@@ -104,7 +104,7 @@ export function PostCard({ post, liked, onLike, onReply, hideRoomBadge }: Props)
         <button
           type="button"
           onClick={toggleComments}
-          className="ml-auto rounded-lg px-3 py-1 text-sm font-bold text-hai-blue hover:bg-hai-blue/10"
+          className="ml-auto min-h-[2.75rem] rounded-lg px-3 py-2 text-sm font-bold text-hai-blue touch-manipulation hover:bg-hai-blue/10"
         >
           Reply
         </button>
@@ -129,11 +129,11 @@ export function PostCard({ post, liked, onLike, onReply, hideRoomBadge }: Props)
               value={replyText}
               onChange={(e) => setReplyText(e.target.value)}
               placeholder="Add a reply…"
-              className="flex-1 rounded-lg border border-[#ead8c2] bg-diho-cream px-3 py-2 text-sm"
+              className="field-touch flex-1 rounded-lg border border-[#ead8c2] bg-diho-cream px-3 py-2 text-base sm:text-sm"
             />
             <button
               type="submit"
-              className="rounded-lg bg-hai-blue px-3 py-2 text-sm font-bold text-diho-cream"
+              className="field-touch shrink-0 rounded-lg bg-hai-blue px-4 py-2 text-sm font-bold text-diho-cream touch-manipulation"
             >
               Send
             </button>

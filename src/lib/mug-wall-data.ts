@@ -3,6 +3,8 @@ export type MugWallEntry = {
   /** Full polaroid art — mug, pin/tape, and name label */
   polaroidSrc: string
   mugText: string
+  /** Why they love this mug — optional submission field */
+  mugLove?: string
   name: string
   role: string
   rotate: number

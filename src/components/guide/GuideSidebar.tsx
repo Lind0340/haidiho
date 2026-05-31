@@ -2,6 +2,7 @@
 
 import { GUIDE_CHAPTER_TITLE_SM } from '@/components/guide/guide-typography'
 import { GUIDE_CHAPTERS } from '@/lib/guide/chapters'
+import { GUIDE_PROGRESS_ITEMS } from '@/lib/guide/guide-ui'
 import { cn } from '@/lib/utils'
 
 type Props = {
@@ -11,60 +12,111 @@ type Props = {
 }
 
 export function GuideSidebar({ activeChapter, readChapters, onSelect }: Props) {
-  return (
-    <aside className="sticky top-24 w-56 shrink-0 self-start">
-      <nav
-        className="space-y-0.5 rounded-xl border border-[#ead8c2] bg-[#fff6e8] p-3 shadow-[0_8px_20px_rgba(45,45,45,0.06)]"
-        aria-label="Guide chapters"
-      >
-        <p className="px-2 pb-3 text-[11px] font-extrabold uppercase tracking-[0.18em] text-hai-blue">
-          Chapters
-        </p>
-        {GUIDE_CHAPTERS.map((ch) => {
-          const isActive = activeChapter === ch.number
-          const isRead = readChapters.has(ch.number)
+  const progressPct = Math.round((readChapters.size / GUIDE_CHAPTERS.length) * 100)
 
-          return (
-            <button
-              key={ch.id}
-              type="button"
-              onClick={() => onSelect(ch.number)}
-              className={cn(
-                'flex w-full items-start gap-2.5 rounded-lg px-2.5 py-2.5 text-left transition-colors',
-                isActive
-                  ? 'bg-hai-blue/12 text-hai-blue-dark'
-                  : 'text-soft-charcoal/80 hover:bg-diho-cream',
-              )}
-            >
-              <span className="mt-1.5 flex h-4 w-4 shrink-0 items-center justify-center" aria-hidden>
-                {isRead ? (
-                  <span
-                    className={cn(
-                      'text-xs font-extrabold',
-                      isActive ? 'text-hai-blue' : 'text-hai-blue/70',
-                    )}
-                  >
-                    ✓
-                  </span>
-                ) : (
-                  <span
-                    className={cn(
-                      'h-2 w-2 rounded-full',
-                      isActive ? 'bg-hai-blue ring-2 ring-hai-blue/25' : 'bg-soft-charcoal/20',
-                    )}
-                  />
+  return (
+    <aside className="relative min-h-full px-4 py-7 sm:px-5 sm:py-8">
+      <div className="relative z-10">
+        <p className="font-[family-name:var(--font-fun)] text-[10px] font-bold uppercase tracking-[0.2em] text-hai-blue">
+          Table of contents
+        </p>
+        <h2 className="mt-1 font-[family-name:var(--font-hand)] text-[2.1rem] font-bold leading-none text-soft-charcoal">
+          THE GUIDE
+        </h2>
+        <p className="mt-2 border-b border-dashed border-[#d4c4a8] pb-3 text-sm font-bold leading-snug text-soft-charcoal/80">
+          How to work with AI without losing your mind.{' '}
+          <span className="text-warm-pink">❤️</span>
+        </p>
+
+        <nav className="mt-5 space-y-0.5" aria-label="Guide chapters">
+          {GUIDE_CHAPTERS.map((ch) => {
+            const isActive = activeChapter === ch.number
+            const isRead = readChapters.has(ch.number)
+
+            return (
+              <button
+                key={ch.id}
+                type="button"
+                onClick={() => onSelect(ch.number)}
+                className={cn(
+                  'flex w-full items-center gap-2.5 rounded-r-lg py-2 pl-2 pr-2 text-left transition-colors',
+                  isActive ? 'guide-index-item-active' : 'hover:bg-[#fff6e8]/90',
                 )}
-              </span>
-              <span className={cn(GUIDE_CHAPTER_TITLE_SM, 'line-clamp-2 min-w-0')}>
-                <span className="font-[family-name:var(--font-fun)] text-[11px] font-bold text-hai-blue/90">
-                  {ch.number}.{' '}
+              >
+                <span
+                  className={cn(
+                    'flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 font-[family-name:var(--font-hand)] text-sm font-bold',
+                    isActive
+                      ? 'border-hai-blue bg-hai-blue text-diho-cream'
+                      : isRead
+                        ? 'border-hai-blue/50 bg-hai-blue/10 text-hai-blue'
+                        : 'border-[#d4c4a8] bg-white text-soft-charcoal/55',
+                  )}
+                  aria-hidden
+                >
+                  {isRead && !isActive ? '✓' : ch.number}
                 </span>
-                {ch.title}
-              </span>
-            </button>
-          )
-        })}
-      </nav>
+                <span className={cn(GUIDE_CHAPTER_TITLE_SM, 'min-w-0 leading-snug')}>
+                  {ch.title}
+                  {isActive && (
+                    <span className="ml-1 inline-block text-accent-gold" aria-hidden>
+                      ⭐
+                    </span>
+                  )}
+                </span>
+              </button>
+            )
+          })}
+        </nav>
+
+        <div className="mt-6 rounded-xl border-2 border-dashed border-[#d4c4a8] bg-[#fffef8]/95 px-3 py-3 shadow-sm">
+          <p className="font-[family-name:var(--font-hand)] text-base font-bold text-hai-blue">
+            DiHo&apos;s Guide Progress
+          </p>
+          <ul className="mt-2 space-y-1.5">
+            {GUIDE_PROGRESS_ITEMS.map((item, i) => {
+              const done = i === 0 ? readChapters.size > 0 : readChapters.size > i
+              return (
+                <li
+                  key={item}
+                  className="flex items-center gap-2 text-xs font-semibold text-soft-charcoal/80"
+                >
+                  <span
+                    className={cn(
+                      'flex h-4 w-4 items-center justify-center rounded-sm border text-[10px]',
+                      done
+                        ? 'border-hai-blue bg-hai-blue/15 text-hai-blue'
+                        : 'border-[#d4c4a8] bg-white',
+                    )}
+                    aria-hidden
+                  >
+                    {done ? '✓' : ''}
+                  </span>
+                  {item}
+                </li>
+              )
+            })}
+          </ul>
+          <div className="mt-3">
+            <div className="h-2.5 overflow-hidden rounded-full border border-[#ead8c2] bg-[#ead8c2]">
+              <div
+                className="h-full rounded-full bg-hai-blue transition-all duration-500"
+                style={{ width: `${progressPct}%` }}
+              />
+            </div>
+            <p className="mt-1 text-right font-[family-name:var(--font-hand)] text-sm font-bold text-hai-blue">
+              {progressPct}%
+            </p>
+          </div>
+        </div>
+
+        <div className="guide-sticky-note mt-6 max-w-[210px] rotate-[-2deg] bg-[#fff59d] px-3 py-2.5 shadow-md">
+          <p className="font-[family-name:var(--font-hand)] text-[15px] font-bold leading-snug text-soft-charcoal">
+            This is a living guide. It grows. It changes. Just like AI (and humans).{' '}
+            <span className="text-warm-pink">❤️</span>
+          </p>
+        </div>
+      </div>
     </aside>
   )
 }

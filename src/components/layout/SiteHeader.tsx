@@ -12,7 +12,7 @@ export function SiteHeader({ embedded = false, className }: SiteHeaderProps) {
   return (
     <header
       className={cn(
-        'relative z-20 px-4 pb-3 pt-4 sm:px-7 sm:pt-7',
+        'relative z-20 px-3 pb-3 pt-3 sm:px-7 sm:pt-7',
         !embedded && 'border-b border-soft-charcoal/10',
         className,
       )}
@@ -20,9 +20,9 @@ export function SiteHeader({ embedded = false, className }: SiteHeaderProps) {
       <div className={cn('relative', !embedded && 'mx-auto w-full max-w-[1024px]')}>
         <Logo
           size="brand"
-          className="absolute left-2 top-1 z-30 drop-shadow-[0_6px_10px_rgba(45,45,45,0.14)] sm:left-[40px] sm:top-2"
+          className="absolute left-1 top-0.5 z-30 w-[4.5rem] drop-shadow-[0_6px_10px_rgba(45,45,45,0.14)] sm:left-[40px] sm:top-2 sm:w-28"
         />
-        <div className="ml-[120px] min-w-0 pr-1 pt-1 sm:ml-[168px]">
+        <div className="ml-[4.75rem] min-w-0 pr-0.5 pt-0.5 sm:ml-[168px] sm:pr-1 sm:pt-1">
           <FeatureCardRow variant="compact" />
         </div>
       </div>

@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import Image from 'next/image'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { HaiMessageContent } from '@/components/haibot/HaiMessageContent'
+import { useChatLauncherPlacement } from '@/hooks/use-chat-launcher-placement'
 import { cn } from '@/lib/utils'
 
 type Message = { role: 'user' | 'assistant'; content: string }
@@ -21,6 +22,7 @@ function formatMessageForClipboard(msg: Message) {
 }
 
 export function HaiThere() {
+  const launcherPlacement = useChatLauncherPlacement('right')
   const [open, setOpen] = useState(false)
   const [messages, setMessages] = useState<Message[]>([
     { role: 'assistant', content: GREETING },
@@ -230,7 +232,10 @@ export function HaiThere() {
       <motion.button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="fixed bottom-3 right-3 z-50 p-0 transition-transform hover:scale-105"
+        className={cn(
+          'fixed z-50 touch-manipulation p-0 transition-transform hover:scale-105',
+          launcherPlacement,
+        )}
         animate={{ scale: [1, 1.03, 1] }}
         transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
         aria-expanded={open}
@@ -241,7 +246,7 @@ export function HaiThere() {
           alt="Hai There — open chat"
           width={CHAT_ICON_WIDTH}
           height={CHAT_ICON_HEIGHT}
-          className="h-[76px] w-auto object-contain drop-shadow-[0_8px_18px_rgba(45,45,45,0.22)] sm:h-[84px]"
+          className="h-[4.25rem] w-auto object-contain drop-shadow-[0_8px_18px_rgba(45,45,45,0.22)] sm:h-[84px]"
           sizes="84px"
           priority
           unoptimized

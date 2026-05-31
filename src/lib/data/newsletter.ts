@@ -1,5 +1,5 @@
 import { createAdminClient, createServerSupabaseClient } from '@/lib/supabase-server'
-import { sendWelcomeEmail } from '@/lib/resend'
+import { sendWelcomeEmailWithToken } from '@/lib/emails/send'
 import { HaidihoErrors } from '@/lib/errors'
 
 export type NewsletterSource =
@@ -43,6 +43,8 @@ export async function subscribeNewsletter(
     }
   }
 
+  const wasUnsubscribed = existing?.status === 'unsubscribed'
+
   if (existing) {
     const { error } = await supabase
       .from('newsletter_subscribers')
@@ -73,13 +75,22 @@ export async function subscribeNewsletter(
   }
 
   try {
-    await sendWelcomeEmail(normalized, firstName)
+    const { data: sub } = await supabase
+      .from('newsletter_subscribers')
+      .select('id')
+      .eq('email', normalized)
+      .single()
+    if (sub?.id) {
+      await sendWelcomeEmailWithToken(normalized, sub.id as string, firstName, wasUnsubscribed)
+    }
   } catch {
     // non-blocking
   }
 
   return {
     ok: true,
-    message: "You're officially in the neighborhood. Hai is doing a little dance. ❤️",
+    message: wasUnsubscribed
+      ? "Welcome back — you're on the list again. ❤️"
+      : "You're officially in the neighborhood. Hai is doing a little dance. ❤️",
   }
 }

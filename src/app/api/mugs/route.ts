@@ -17,6 +17,14 @@ export async function POST(request: Request) {
     const mug_story = String(form.get('mug_story') ?? '').trim() || null
     const email = String(form.get('email') ?? '').trim()
     const file = form.get('image') as File | null
+    const terms_agreed = form.get('terms_agreed') === 'true'
+
+    if (!terms_agreed) {
+      return NextResponse.json(
+        { error: 'You must agree to the Mug Submission Terms.' },
+        { status: 400 },
+      )
+    }
 
     if (!member_name || !file?.size) {
       return NextResponse.json({ error: HaidihoErrors.validation }, { status: 400 })
@@ -41,6 +49,7 @@ export async function POST(request: Request) {
     const { data: urlData } = supabase.storage.from('mugs').getPublicUrl(path)
     const image_url = urlData.publicUrl
 
+    const agreedAt = new Date().toISOString()
     const { data, error } = await supabase
       .from('mug_submissions')
       .insert({
@@ -51,6 +60,8 @@ export async function POST(request: Request) {
         mug_story,
         image_url,
         status: 'pending',
+        terms_agreed: true,
+        terms_agreed_at: agreedAt,
       })
       .select('id')
       .single()

@@ -13,6 +13,7 @@ export function dbMugToEntry(row: MugSubmission, featured = false): MugWallEntry
     id: row.id,
     polaroidSrc: row.image_url,
     mugText: row.mug_text ?? '',
+    mugLove: row.mug_story?.trim() || undefined,
     name: row.member_name,
     role: row.member_title ?? 'Community member',
     rotate: hashRotate(row.id),

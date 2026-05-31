@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useState } from 'react'
+import { LegalLink, TermsCheckbox } from '@/components/forms/TermsCheckbox'
 import { signIn, signInWithMagicLink, signUp } from '@/lib/auth'
 import { HaidihoErrors, friendlyError } from '@/lib/errors'
 import { cn } from '@/lib/utils'
@@ -24,6 +25,7 @@ export function AuthForm({ mode: initialMode }: Props) {
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [message, setMessage] = useState<string | null>(null)
+  const [termsAgreed, setTermsAgreed] = useState(false)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -51,7 +53,7 @@ export function AuthForm({ mode: initialMode }: Props) {
   }
 
   return (
-    <div className="mx-auto max-w-md rounded-[20px] border border-[#ead8c2] bg-[#fff6e8] p-6 shadow-lg">
+    <div className="mx-auto max-w-md rounded-[20px] border border-[#ead8c2] bg-[#fff6e8] p-4 shadow-lg sm:p-6">
       <h1 className="font-[family-name:var(--font-hand)] text-3xl font-bold text-soft-charcoal">
         {mode === 'signup' ? 'Join the neighborhood' : 'Welcome back'}
       </h1>
@@ -62,7 +64,7 @@ export function AuthForm({ mode: initialMode }: Props) {
             placeholder="@handle"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="w-full rounded-lg border border-[#ead8c2] bg-diho-cream px-3 py-2 text-sm"
+            className="field-touch w-full rounded-lg border border-[#ead8c2] bg-diho-cream px-3 py-2 text-base sm:text-sm"
           />
         )}
         <input
@@ -71,7 +73,7 @@ export function AuthForm({ mode: initialMode }: Props) {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="w-full rounded-lg border border-[#ead8c2] bg-diho-cream px-3 py-2 text-sm"
+          className="field-touch w-full rounded-lg border border-[#ead8c2] bg-diho-cream px-3 py-2 text-base sm:text-sm"
         />
         {mode !== 'magic' && (
           <input
@@ -81,15 +83,25 @@ export function AuthForm({ mode: initialMode }: Props) {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full rounded-lg border border-[#ead8c2] bg-diho-cream px-3 py-2 text-sm"
+            className="field-touch w-full rounded-lg border border-[#ead8c2] bg-diho-cream px-3 py-2 text-base sm:text-sm"
           />
+        )}
+        {mode === 'signup' && (
+          <TermsCheckbox
+            id="signup-terms"
+            checked={termsAgreed}
+            onChange={setTermsAgreed}
+          >
+            I agree to the <LegalLink href="/terms">Terms of Service</LegalLink> and{' '}
+            <LegalLink href="/privacy">Privacy Policy</LegalLink>
+          </TermsCheckbox>
         )}
         {error && <p className="text-sm font-semibold text-warm-pink">{error}</p>}
         {message && <p className="text-sm font-bold text-hai-blue">{message}</p>}
         <button
           type="submit"
-          disabled={busy}
-          className="w-full rounded-xl bg-hai-blue py-3 font-[family-name:var(--font-hand)] text-xl font-bold text-diho-cream disabled:opacity-60"
+          disabled={busy || (mode === 'signup' && !termsAgreed)}
+          className="field-touch w-full rounded-xl bg-hai-blue py-3 font-[family-name:var(--font-hand)] text-xl font-bold text-diho-cream disabled:opacity-60"
         >
           {busy ? 'One sec…' : mode === 'magic' ? 'Send magic link' : mode === 'signup' ? 'Sign up' : 'Sign in'}
         </button>

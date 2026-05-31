@@ -18,7 +18,7 @@ export function MugWallBoard({ mugs, featuredId }: Props) {
       </h2>
 
       <MugWallCupboard>
-        <div className="grid min-h-[320px] grid-cols-2 grid-rows-2 gap-x-3 gap-y-1 sm:grid-cols-4 sm:grid-rows-2 sm:gap-x-2 sm:gap-y-2">
+        <div className="grid min-h-[280px] grid-cols-2 gap-x-2 gap-y-2 sm:min-h-[320px] sm:grid-cols-4 sm:grid-rows-2 sm:gap-x-2 sm:gap-y-2">
           {mugs.map((entry, index) => (
             <div
               key={entry.id}

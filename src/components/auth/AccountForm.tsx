@@ -42,7 +42,7 @@ export function AccountForm({ profile, email }: Props) {
   }
 
   return (
-    <div className="mt-6 rounded-[18px] border border-[#ead8c2] bg-[#fff6e8] p-5">
+    <div className="mt-6 rounded-[18px] border border-[#ead8c2] bg-[#fff6e8] p-4 sm:p-5">
       <p className="text-sm font-semibold text-soft-charcoal/70">{email}</p>
       <p className="text-xs font-bold text-hai-blue">Role: {profile?.role ?? 'member'}</p>
       <form onSubmit={save} className="mt-4 space-y-3">
@@ -51,7 +51,7 @@ export function AccountForm({ profile, email }: Props) {
           <input
             value={displayName}
             onChange={(e) => setDisplayName(e.target.value)}
-            className="mt-1 w-full rounded-lg border border-[#ead8c2] bg-diho-cream px-3 py-2 text-sm"
+            className="field-touch mt-1 w-full rounded-lg border border-[#ead8c2] bg-diho-cream px-3 py-2 text-base sm:text-sm"
           />
         </label>
         <label className="block text-xs font-bold text-soft-charcoal/70">
@@ -60,7 +60,7 @@ export function AccountForm({ profile, email }: Props) {
             rows={3}
             value={bio}
             onChange={(e) => setBio(e.target.value)}
-            className="mt-1 w-full rounded-lg border border-[#ead8c2] bg-diho-cream px-3 py-2 text-sm"
+            className="field-touch mt-1 w-full rounded-lg border border-[#ead8c2] bg-diho-cream px-3 py-2 text-base sm:text-sm"
           />
         </label>
         {error && <p className="text-sm text-warm-pink">{error}</p>}
@@ -68,7 +68,7 @@ export function AccountForm({ profile, email }: Props) {
         <button
           type="submit"
           disabled={busy}
-          className="rounded-xl bg-hai-blue px-4 py-2 font-bold text-diho-cream disabled:opacity-60"
+          className="field-touch rounded-xl bg-hai-blue px-4 py-3 font-bold text-diho-cream disabled:opacity-60"
         >
           Save
         </button>

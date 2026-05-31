@@ -1,5 +1,6 @@
 import { getRequestUser } from '@/lib/api-auth'
-import { moderateAndApply } from '@/lib/data/ai-moderation'
+import { prescreenComment } from '@/lib/data/ai-moderation'
+import { notifyReplyPublished } from '@/lib/emails/notify'
 import { createAdminClient } from '@/lib/supabase-server'
 import { fetchPostComments } from '@/lib/data/neighborhood'
 import { HaidihoErrors, friendlyError } from '@/lib/errors'
@@ -48,8 +49,7 @@ export async function POST(request: Request) {
     const admin = createAdminClient()
     if (admin) {
       try {
-        const verdict = await moderateAndApply({
-          contentType: 'comment',
+        const verdict = await prescreenComment({
           contentId: comment.id,
           content: String(content).trim(),
         })
@@ -62,6 +62,7 @@ export async function POST(request: Request) {
             { status: 422 },
           )
         }
+        void notifyReplyPublished(comment.id, postId)
       } catch (modErr) {
         console.error('[api/neighborhood/comments] AI moderation failed:', modErr)
         return NextResponse.json({ error: HaidihoErrors.generic }, { status: 500 })

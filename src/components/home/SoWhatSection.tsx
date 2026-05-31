@@ -20,10 +20,10 @@ function RedUnderline() {
 
 export function SoWhatSection() {
   return (
-    <section className="px-7 pb-3 pt-2">
-      <div className="grid grid-cols-[1fr_1.05fr] items-start gap-6 overflow-visible rounded-[22px] border border-[#ead8c2]/80 bg-[#fff6e8] px-8 py-7 shadow-[0_8px_20px_rgba(45,45,45,0.06)]">
+    <section className="px-1 pb-3 pt-2 sm:px-4 lg:px-7">
+      <div className="grid grid-cols-1 items-start gap-5 overflow-visible rounded-[18px] border border-[#ead8c2]/80 bg-[#fff6e8] px-5 py-6 shadow-[0_8px_20px_rgba(45,45,45,0.06)] sm:rounded-[22px] sm:px-8 sm:py-7 md:grid-cols-[1fr_1.05fr] md:gap-6">
         <div>
-          <h2 className="font-[family-name:var(--font-lora)] text-[28px] font-bold leading-tight text-soft-charcoal">
+          <h2 className="font-[family-name:var(--font-lora)] text-2xl font-bold leading-tight text-soft-charcoal sm:text-[28px]">
             So What Is This Place?
           </h2>
           <RedUnderline />

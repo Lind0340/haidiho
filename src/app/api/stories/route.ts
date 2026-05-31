@@ -1,6 +1,6 @@
 import { getRequestUser } from '@/lib/api-auth'
 import { createAdminClient } from '@/lib/supabase-server'
-import { moderateAndApply } from '@/lib/data/ai-moderation'
+import { prescreenCommunitySubmission } from '@/lib/data/ai-moderation'
 import { createPendingFeedPostFromStory } from '@/lib/data/story-neighborhood'
 import { neighborhoodDisplayName } from '@/lib/neighborhood-profile'
 import { sendStoryConfirmation } from '@/lib/resend'
@@ -27,6 +27,14 @@ export async function POST(request: Request) {
     const story_content = String(body.story ?? body.story_content ?? '').trim()
     const room = body.room as RoomId | undefined
     const ai_tool_used = body.ai_tool_used ? String(body.ai_tool_used).trim() : null
+    const terms_agreed = body.terms_agreed === true
+
+    if (!terms_agreed) {
+      return NextResponse.json(
+        { error: 'You must agree to the Story Submission Terms.' },
+        { status: 400 },
+      )
+    }
 
     if (story_content.length < 20) {
       return NextResponse.json({ error: HaidihoErrors.validation }, { status: 400 })
@@ -50,6 +58,7 @@ export async function POST(request: Request) {
       story_submitted: true,
     })
 
+    const agreedAt = new Date().toISOString()
     const row = {
       user_id: user.id,
       submitter_name,
@@ -58,6 +67,8 @@ export async function POST(request: Request) {
       story_content,
       ai_tool_used,
       status: 'pending' as const,
+      terms_agreed: true,
+      terms_agreed_at: agreedAt,
     }
 
     const result = await supabase.from('story_submissions').insert(row).select('id').single()
@@ -90,7 +101,7 @@ export async function POST(request: Request) {
 
     if (storyId && admin) {
       try {
-        const verdict = await moderateAndApply({
+        const verdict = await prescreenCommunitySubmission({
           contentType: 'story',
           contentId: storyId,
           content: story_content,
