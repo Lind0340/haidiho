@@ -1,3 +1,7 @@
+import { getSiteUrl } from '@/lib/site-url'
+
+export { getSiteUrl }
+
 /** Props for the weekly React Email template and admin composer. */
 
 export type ExclusiveType =
@@ -92,14 +96,6 @@ export const EXCLUSIVE_LABELS: Record<ExclusiveType, string> = {
   compliance: 'COMPLIANCE Update',
   derek: 'Derek Observation',
   bob: "BOB's Significant Events",
-}
-
-export function getSiteUrl(): string {
-  return (
-    process.env.NEXT_PUBLIC_SITE_URL ??
-    process.env.NEXT_PUBLIC_APP_URL ??
-    'https://haidiho.com'
-  ).replace(/\/$/, '')
 }
 
 export function rowDifferences(row: NewsletterIssueRow): WeeklyNewsletterProps['differences'] {

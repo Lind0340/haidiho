@@ -1,6 +1,7 @@
 'use client'
 
 import { createClient } from '@/lib/supabase'
+import { getPublicSiteUrl } from '@/lib/site-url'
 import type { UserRole } from '@/types/database'
 
 export async function signUp(
@@ -50,7 +51,7 @@ export async function signIn(email: string, password: string) {
 export async function signInWithMagicLink(email: string) {
   const supabase = createClient()
   if (!supabase) throw new Error('Supabase not configured')
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'
+  const siteUrl = getPublicSiteUrl()
   const { data, error } = await supabase.auth.signInWithOtp({
     email,
     options: { emailRedirectTo: `${siteUrl}/auth/confirm` },
