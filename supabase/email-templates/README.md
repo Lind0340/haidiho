@@ -11,7 +11,7 @@ In **Supabase Dashboard → Project Settings → Authentication → URL Configur
 | **Site URL** | `https://haidiho.com` | `http://localhost:3000` |
 | **Redirect URLs** | `https://haidiho.com/**`, `http://localhost:3000/**` | same pattern |
 
-Templates use `{{ .SiteURL }}/images/haidiho-wordmark-transparent.png` for the logo.
+Templates use `{{ .SiteURL }}/images/haidiho-email-logo.png` for the logo.
 
 ## 2. Paste HTML templates
 

@@ -13,6 +13,7 @@ import {
   Text,
 } from '@react-email/components'
 import type { CSSProperties } from 'react'
+import { getEmailAssets } from './components/email-constants'
 import { getEmailSiteUrl } from '@/lib/site-url'
 import type {
   ExclusiveType,
@@ -60,8 +61,8 @@ export default function WeeklyNewsletter(props: WeeklyNewsletterEmailProps) {
     previewText,
   } = props
 
+  const assets = getEmailAssets()
   const assetBase = getEmailSiteUrl()
-  const logoUrl = `${assetBase}/images/haidiho-wordmark-transparent.png`
   const haiAvatar = `${assetBase}/images/hai-there-chat-icon.png`
   const dihoAvatar = `${assetBase}/images/diho-there-chat-icon-v2.png`
   const preheader =
@@ -77,7 +78,13 @@ export default function WeeklyNewsletter(props: WeeklyNewsletterEmailProps) {
         <Container style={container}>
           {/* 1. HEADER */}
           <Section style={pad}>
-            <Img src={logoUrl} width={200} alt="Haidiho" style={logo} />
+            <Img
+              src={assets.logo}
+              width={assets.logoWidth}
+              height={assets.logoHeight}
+              alt="HaiDiHo — real humans, AI coworkers"
+              style={logo}
+            />
             <Text style={reportTitle}>The Weekly Neighborhood Report</Text>
             <Text style={issueMeta}>
               Issue #{issueNumber} · {issueDate}
@@ -212,7 +219,13 @@ export default function WeeklyNewsletter(props: WeeklyNewsletterEmailProps) {
           {/* 10. FOOTER */}
           <Section style={footerPad}>
             <Hr style={divider} />
-            <Img src={logoUrl} width={100} alt="Haidiho" style={{ ...logo, margin: '16px auto' }} />
+            <Img
+              src={assets.logo}
+              width={100}
+              height={100}
+              alt="HaiDiHo"
+              style={{ ...logo, margin: '16px auto', maxWidth: '100px' }}
+            />
             <Text style={footerTag}>
               Real humans. AI coworkers. One coffee at a time. ☕
             </Text>
@@ -354,7 +367,13 @@ const body: CSSProperties = { margin: 0, padding: 0, backgroundColor: C.cream, f
 const container: CSSProperties = { maxWidth: '600px', margin: '0 auto', backgroundColor: C.cream }
 const pad: CSSProperties = { padding: '0 20px 24px' }
 const footerPad: CSSProperties = { padding: '8px 20px 36px', textAlign: 'center' }
-const logo: CSSProperties = { display: 'block', margin: '28px auto 10px' }
+const logo: CSSProperties = {
+  display: 'block',
+  margin: '28px auto 10px',
+  maxWidth: '256px',
+  width: '100%',
+  height: 'auto',
+}
 const reportTitle: CSSProperties = {
   margin: '0 0 6px',
   fontSize: '22px',

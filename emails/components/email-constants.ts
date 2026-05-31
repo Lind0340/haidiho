@@ -25,11 +25,20 @@ export const EMAIL = {
 
 export const EMAIL_FONT = 'Arial, Helvetica, sans-serif'
 
+/** Branded Hai & DiHo sticker logo (256×256) for email headers. */
+export const EMAIL_LOGO = {
+  file: 'haidiho-email-logo.png',
+  width: 256,
+  height: 256,
+} as const
+
 /** Absolute asset URLs for email clients — always a public origin, never localhost. */
 export function getEmailAssets() {
   const base = getEmailSiteUrl()
   return {
-    logo: `${base}/images/haidiho-wordmark-transparent.png`,
+    logo: `${base}/images/${EMAIL_LOGO.file}`,
+    logoWidth: EMAIL_LOGO.width,
+    logoHeight: EMAIL_LOGO.height,
     hai: `${base}/images/hai-there-chat-icon.png`,
     diho: `${base}/images/diho-there-chat-icon-v2.png`,
     site: getEmailLinkUrl(),

@@ -29,6 +29,8 @@ type Props = {
   footerVariant?: FooterVariant
   showUnsubscribe?: boolean
   unsubscribeUrl?: string
+  /** Coffee + heart accent above the sign-off (welcome email). */
+  footerAccent?: boolean
 }
 
 export function EmailLayout({
@@ -38,6 +40,7 @@ export function EmailLayout({
   footerVariant = 'standard',
   showUnsubscribe = false,
   unsubscribeUrl,
+  footerAccent = false,
 }: Props) {
   const assets = getEmailAssets()
   const minimal = footerVariant === 'minimal'
@@ -54,9 +57,9 @@ export function EmailLayout({
           <Section style={contentPad}>
             <Img
               src={assets.logo}
-              width={200}
-              height={69}
-              alt="Haidiho"
+              width={assets.logoWidth}
+              height={assets.logoHeight}
+              alt="HaiDiHo — real humans, AI coworkers"
               style={logo}
             />
             <Hr style={divider} />
@@ -67,6 +70,13 @@ export function EmailLayout({
           <Section style={{ padding: minimal ? '16px 20px 28px' : '20px 20px 32px' }}>
             {!minimal && (
               <>
+                {footerAccent ? (
+                  <Section style={footerAccentWrap}>
+                    <Text style={footerAccentIcons} aria-hidden>
+                      ☕&nbsp;&nbsp;❤️&nbsp;&nbsp;☕
+                    </Text>
+                  </Section>
+                ) : null}
                 <Text style={footerTagline}>
                   Real humans. AI coworkers.
                   <br />
@@ -101,8 +111,9 @@ export function EmailLayout({
 
 const logo: CSSProperties = {
   display: 'block',
-  margin: '0 auto 16px',
-  maxWidth: '200px',
+  margin: '0 auto 12px',
+  maxWidth: '256px',
+  width: '100%',
   height: 'auto',
 }
 
@@ -142,4 +153,22 @@ const footerLinks: CSSProperties = {
 const link: CSSProperties = {
   color: EMAIL.haiBlue,
   textDecoration: 'underline',
+}
+
+const footerAccentWrap: CSSProperties = {
+  textAlign: 'center',
+  margin: '0 auto 12px',
+  padding: '10px 16px',
+  backgroundColor: EMAIL.goldLight,
+  borderRadius: '999px',
+  border: `1px solid ${EMAIL.gold}55`,
+  maxWidth: '200px',
+}
+
+const footerAccentIcons: CSSProperties = {
+  margin: 0,
+  fontSize: '20px',
+  lineHeight: 1.2,
+  letterSpacing: '0.15em',
+  fontFamily: EMAIL_FONT,
 }

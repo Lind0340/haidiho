@@ -27,7 +27,7 @@ export function haidihoEmailLayout(opts: LayoutOpts) {
     /\/$/,
     '',
   )
-  const logoUrl = `${site}/images/haidiho-wordmark-transparent.png`
+  const logoUrl = `${site}/images/haidiho-email-logo.png`
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -45,7 +45,7 @@ export function haidihoEmailLayout(opts: LayoutOpts) {
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:520px;">
           <tr>
             <td style="padding:0 0 16px;text-align:center;">
-              <img src="${logoUrl}" alt="Haidiho" width="220" style="display:inline-block;max-width:220px;height:auto;border:0;" />
+              <img src="${logoUrl}" alt="HaiDiHo — real humans, AI coworkers" width="256" height="256" style="display:inline-block;max-width:256px;width:100%;height:auto;border:0;" />
             </td>
           </tr>
           <tr>
