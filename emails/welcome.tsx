@@ -17,7 +17,7 @@ export type WelcomeEmailProps = {
 }
 
 export default function WelcomeEmail({ siteUrl, welcomeBack, unsubscribeUrl }: WelcomeEmailProps) {
-  const assets = getEmailAssets(siteUrl)
+  const assets = getEmailAssets()
 
   return (
     <EmailLayout

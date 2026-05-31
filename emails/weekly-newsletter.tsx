@@ -13,6 +13,7 @@ import {
   Text,
 } from '@react-email/components'
 import type { CSSProperties } from 'react'
+import { getEmailSiteUrl } from '@/lib/site-url'
 import type {
   ExclusiveType,
   NeighborhoodPostCard,
@@ -59,9 +60,10 @@ export default function WeeklyNewsletter(props: WeeklyNewsletterEmailProps) {
     previewText,
   } = props
 
-  const logoUrl = `${siteUrl}/images/haidiho-wordmark-transparent.png`
-  const haiAvatar = `${siteUrl}/images/hai-there-chat-icon.png`
-  const dihoAvatar = `${siteUrl}/images/diho-there-chat-icon-v2.png`
+  const assetBase = getEmailSiteUrl()
+  const logoUrl = `${assetBase}/images/haidiho-wordmark-transparent.png`
+  const haiAvatar = `${assetBase}/images/hai-there-chat-icon.png`
+  const dihoAvatar = `${assetBase}/images/diho-there-chat-icon-v2.png`
   const preheader =
     previewText ?? `Haidiho #${String(issueNumber).padStart(3, '0')} — your weekly neighborhood report.`
 

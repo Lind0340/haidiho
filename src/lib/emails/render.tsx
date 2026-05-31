@@ -6,9 +6,9 @@ import StoryConfirmationEmail from '../../../emails/story-confirmation'
 import PostApprovedEmail from '../../../emails/post-approved'
 import ReplyNotificationEmail from '../../../emails/reply-notification'
 import ModerationAlertEmail from '../../../emails/moderation-alert'
-import { getSiteUrl } from '@/lib/email/newsletter-types'
+import { getEmailLinkUrl } from '@/lib/site-url'
 
-export function buildUnsubscribeUrl(token: string, siteUrl = getSiteUrl()) {
+export function buildUnsubscribeUrl(token: string, siteUrl = getEmailLinkUrl()) {
   const base = siteUrl.replace(/\/$/, '')
   return `${base}/unsubscribe?token=${encodeURIComponent(token)}`
 }

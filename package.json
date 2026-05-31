@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "email:dev": "email dev --dir emails",
-    "email:test": "npx tsx scripts/send-all-transactional-emails.mts"
+    "email:test": "npx tsx scripts/send-all-transactional-emails.mts",
+    "newsletter:resend-welcome": "npx tsx scripts/resend-welcome.mts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.82.0",

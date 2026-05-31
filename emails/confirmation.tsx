@@ -16,7 +16,7 @@ export type ConfirmationEmailProps = {
 }
 
 export default function ConfirmationEmail({ siteUrl, confirmationUrl }: ConfirmationEmailProps) {
-  const assets = getEmailAssets(siteUrl)
+  const assets = getEmailAssets()
 
   return (
     <EmailLayout siteUrl={siteUrl} preview="Confirm your Haidiho account — one click and you're in.">

@@ -16,10 +16,10 @@ export function HeroSection({ latestStrip }: Props) {
     ? `Strip ${String(latestStrip.number).padStart(3, '0')} — ${latestStrip.title}`
     : 'Strip 001 — Hai and DiHo at their desks on their first day together'
   return (
-    <section className="relative px-1 pb-8 pt-1 sm:px-4 sm:pb-10 lg:px-7">
-      <div className="relative grid grid-cols-1 items-start gap-4 sm:gap-6 lg:grid-cols-[minmax(300px,360px)_minmax(0,1fr)] lg:gap-7">
-        <div className="relative z-10 mt-2 min-h-0 overflow-visible rounded-[20px] border border-[#ead8c2] bg-[#fff6e8] px-4 pb-5 pt-1 shadow-[0_12px_26px_rgba(45,45,45,0.08)] sm:mt-5 sm:min-h-[390px] sm:px-8">
-          <div className="absolute -left-1 top-4 hidden rotate-[-6deg] rounded-sm bg-[#9bd7d2] px-2 py-1.5 font-[family-name:var(--font-hand)] text-[13px] font-semibold leading-[1.15] text-soft-charcoal shadow-md sm:-left-5 sm:block sm:top-6 sm:px-2.5 sm:py-2 sm:text-[15px]">
+    <section className="relative px-1 pb-8 pt-1 sm:px-4 sm:pb-10 lg:px-2 xl:pb-12">
+      <div className="relative grid grid-cols-1 items-start gap-4 sm:gap-6 lg:grid-cols-[minmax(320px,400px)_minmax(0,1fr)] lg:gap-8 xl:grid-cols-[minmax(380px,460px)_minmax(0,1fr)] xl:gap-10">
+        <div className="relative z-10 mt-2 min-h-0 overflow-visible rounded-[20px] border border-[#ead8c2] bg-[#fff6e8] px-5 pb-6 pt-1 shadow-[0_12px_26px_rgba(45,45,45,0.08)] sm:mt-5 sm:min-h-[400px] sm:px-8 xl:min-h-[440px] xl:px-10 xl:pb-8">
+          <div className="absolute -left-1 top-4 hidden rotate-[-6deg] rounded-sm bg-[#9bd7d2] px-2 py-1.5 font-[family-name:var(--font-hand)] text-[13px] font-semibold leading-[1.15] text-soft-charcoal shadow-md sm:-left-5 sm:block sm:top-6 sm:px-2.5 sm:py-2 sm:text-[15px] xl:text-base">
             maybe
             <br />
             coffee
@@ -34,7 +34,7 @@ export function HeroSection({ latestStrip }: Props) {
               width={1024}
               height={397}
               priority
-              className="h-auto w-[min(100%,290px)]"
+              className="h-auto w-[min(100%,300px)] sm:w-[min(100%,340px)] xl:w-[min(100%,420px)]"
             />
           </div>
 
@@ -45,11 +45,11 @@ export function HeroSection({ latestStrip }: Props) {
               width={929}
               height={320}
               priority
-              className="h-auto w-[min(100%,300px)]"
+              className="h-auto w-[min(100%,320px)] sm:w-[min(100%,360px)] xl:w-[min(100%,420px)]"
             />
           </div>
 
-          <p className="mt-2 text-center text-[1.35rem] font-extrabold leading-[1.12] tracking-[-0.03em] text-soft-charcoal sm:text-[26px]">
+          <p className="mt-3 text-center text-[1.4rem] font-extrabold leading-[1.12] tracking-[-0.03em] text-soft-charcoal sm:text-[28px] xl:text-[32px]">
             your guide to the care,
             <br />
             feeding and training of
@@ -57,22 +57,22 @@ export function HeroSection({ latestStrip }: Props) {
             your <span className="text-hai-blue">AI</span> coworker
           </p>
 
-          <div className="mt-4 flex justify-center">
+          <div className="mt-5 flex justify-center xl:mt-6">
             <Link
               href="/neighborhood"
-              className="inline-flex min-w-[210px] items-center justify-center rounded-xl bg-[#0867e8] px-7 py-3.5 text-xl font-extrabold text-diho-cream shadow-[0_8px_0_rgba(30,64,175,0.35)] transition-transform hover:-translate-y-0.5 active:translate-y-0"
+              className="inline-flex min-w-[220px] items-center justify-center rounded-xl bg-[#0867e8] px-8 py-4 text-xl font-extrabold text-diho-cream shadow-[0_8px_0_rgba(30,64,175,0.35)] transition-transform hover:-translate-y-0.5 active:translate-y-0 xl:min-w-[260px] xl:text-2xl"
             >
               Come On In 👋
             </Link>
           </div>
 
-          <p className="mt-2 text-center text-sm font-bold text-soft-charcoal/70">
+          <p className="mt-3 text-center text-sm font-bold text-soft-charcoal/70 xl:text-base">
             cartoons, actual tips, and a lot of coffee
           </p>
         </div>
 
         <div className="relative z-0 mt-2 w-full min-w-0 sm:mt-5">
-          <div className="relative aspect-[1024/682] w-full overflow-hidden rounded-[24px] border-[5px] border-[#fff8f0] bg-[#d8c1a6] shadow-[0_16px_32px_rgba(45,45,45,0.18)]">
+          <div className="relative aspect-[1024/682] w-full overflow-hidden rounded-[24px] border-[5px] border-[#fff8f0] bg-[#d8c1a6] shadow-[0_16px_32px_rgba(45,45,45,0.18)] xl:rounded-[28px] xl:border-[6px]">
             <Image
               src={heroSrc}
               alt={heroAlt}
@@ -80,7 +80,7 @@ export function HeroSection({ latestStrip }: Props) {
               height={STRIP_HERO_HEIGHT}
               priority
               className="h-full w-full object-contain object-center"
-              sizes="(max-width: 1024px) 100vw, 620px"
+              sizes="(max-width: 1024px) 100vw, (max-width: 1536px) 720px, 820px"
             />
           </div>
         </div>

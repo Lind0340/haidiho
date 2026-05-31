@@ -24,7 +24,7 @@ export default function ModerationAlertEmail({
   mugSubmissions,
   storySubmissions,
 }: ModerationAlertEmailProps) {
-  const assets = getEmailAssets(siteUrl)
+  const assets = getEmailAssets()
   const modUrl = `${assets.site}/admin/moderation`
 
   return (

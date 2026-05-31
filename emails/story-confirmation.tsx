@@ -16,7 +16,7 @@ export type StoryConfirmationEmailProps = {
 }
 
 export default function StoryConfirmationEmail({ siteUrl, name }: StoryConfirmationEmailProps) {
-  const assets = getEmailAssets(siteUrl)
+  const assets = getEmailAssets()
   const boardUrl = `${assets.site}/neighborhood`
 
   return (

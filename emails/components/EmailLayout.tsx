@@ -39,7 +39,7 @@ export function EmailLayout({
   showUnsubscribe = false,
   unsubscribeUrl,
 }: Props) {
-  const assets = getEmailAssets(siteUrl)
+  const assets = getEmailAssets()
   const minimal = footerVariant === 'minimal'
 
   return (
@@ -52,7 +52,13 @@ export function EmailLayout({
       <Body style={bodyStyle}>
         <Container style={outerContainer}>
           <Section style={contentPad}>
-            <Img src={assets.logo} width={200} height="auto" alt="Haidiho" style={logo} />
+            <Img
+              src={assets.logo}
+              width={200}
+              height={69}
+              alt="Haidiho"
+              style={logo}
+            />
             <Hr style={divider} />
           </Section>
 

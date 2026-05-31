@@ -1,6 +1,6 @@
 import { Resend } from 'resend'
 import { createAdminClient } from '@/lib/supabase-server'
-import { getSiteUrl } from '@/lib/email/newsletter-types'
+import { getEmailLinkUrl } from '@/lib/site-url'
 import { fetchPendingModeration } from '@/lib/data/admin'
 import { logSentEmail } from '@/lib/emails/log'
 import {
@@ -14,7 +14,7 @@ import {
   renderWelcomeHtml,
 } from '@/lib/emails/render'
 
-const fromEmail = () => process.env.RESEND_FROM_EMAIL ?? 'hello@haidiho.com'
+const fromEmail = () => process.env.RESEND_FROM_EMAIL?.trim() || 'hello@haidiho.com'
 const fromHeader = () => `Hai & DiHo <${fromEmail()}>`
 const replyTo = () => process.env.NEWSLETTER_REPLY_TO ?? 'wade@haidiho.com'
 const moderationInbox = () =>
@@ -68,8 +68,7 @@ async function sendHtml(opts: {
 }
 
 export async function sendConfirmationEmail(email: string, confirmationUrl: string) {
-  const siteUrl = getSiteUrl()
-  const html = await renderConfirmationHtml(siteUrl, confirmationUrl)
+  const html = await renderConfirmationHtml(getEmailLinkUrl(), confirmationUrl)
   return sendHtml({
     template: 'confirmation',
     to: email,
@@ -86,8 +85,7 @@ export async function sendWelcomeEmail(
   unsubscribeUrl?: string,
 ) {
   void firstName
-  const siteUrl = getSiteUrl()
-  const html = await renderWelcomeHtml(siteUrl, welcomeBack, unsubscribeUrl)
+  const html = await renderWelcomeHtml(getEmailLinkUrl(), welcomeBack, unsubscribeUrl)
   return sendHtml({
     template: 'welcome',
     to: email,
@@ -122,7 +120,7 @@ export async function sendWelcomeEmailWithToken(
 }
 
 export async function sendMugConfirmation(email: string, memberName: string) {
-  const html = await renderMugConfirmationHtml(getSiteUrl(), memberName)
+  const html = await renderMugConfirmationHtml(getEmailLinkUrl(), memberName)
   return sendHtml({
     template: 'mug_confirmation',
     to: email,
@@ -133,7 +131,7 @@ export async function sendMugConfirmation(email: string, memberName: string) {
 }
 
 export async function sendStoryConfirmation(email: string, name: string) {
-  const html = await renderStoryConfirmationHtml(getSiteUrl(), name)
+  const html = await renderStoryConfirmationHtml(getEmailLinkUrl(), name)
   return sendHtml({
     template: 'story_confirmation',
     to: email,
@@ -151,7 +149,7 @@ export async function sendPostApprovedEmail(opts: {
   postId: string
 }) {
   const html = await renderPostApprovedHtml(
-    getSiteUrl(),
+    getEmailLinkUrl(),
     opts.username,
     opts.postExcerpt,
     opts.room,
@@ -173,7 +171,7 @@ export async function sendReplyNotificationEmail(opts: {
   postId: string
 }) {
   const html = await renderReplyNotificationHtml(
-    getSiteUrl(),
+    getEmailLinkUrl(),
     opts.username,
     opts.postExcerpt,
     opts.replyExcerpt,
@@ -195,7 +193,7 @@ export async function sendModerationAlertEmail() {
   const total = communityPosts + mugSubmissions + storySubmissions
   if (total === 0) return { skipped: true as const, reason: 'empty_queue' }
 
-  const html = await renderModerationAlertHtml(getSiteUrl(), {
+  const html = await renderModerationAlertHtml(getEmailLinkUrl(), {
     total,
     communityPosts,
     mugSubmissions,

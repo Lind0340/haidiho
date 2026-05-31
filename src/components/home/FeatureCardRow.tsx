@@ -24,8 +24,8 @@ export function FeatureCardRow({ className, variant = 'default' }: FeatureCardRo
       <div
         className={cn(
           isCompact
-            ? 'flex w-max gap-2 px-1 md:grid md:w-full md:grid-cols-5 md:gap-2 md:px-0'
-            : 'grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5 md:gap-4',
+            ? 'flex w-max gap-2 px-1 md:grid md:w-full md:grid-cols-5 md:gap-2 md:px-0 xl:gap-3'
+            : 'grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5 md:gap-4 xl:gap-5',
         )}
       >
         {FEATURE_GRAPHIC_CARDS.map((card) => (

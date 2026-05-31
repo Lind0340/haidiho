@@ -11,7 +11,7 @@ export type NewsletterSource =
   | 'guide'
 
 export type SubscribeResult =
-  | { ok: true; message: string; alreadySubscribed?: boolean }
+  | { ok: true; message: string; alreadySubscribed?: boolean; emailSent?: boolean }
   | { ok: false; error: string }
 
 export async function subscribeNewsletter(
@@ -24,7 +24,8 @@ export async function subscribeNewsletter(
     return { ok: false, error: HaidihoErrors.validation }
   }
 
-  const supabase = (await createServerSupabaseClient()) ?? createAdminClient()
+  const admin = createAdminClient()
+  const supabase = admin ?? (await createServerSupabaseClient())
   if (!supabase) {
     return { ok: false, error: HaidihoErrors.generic }
   }
@@ -44,6 +45,7 @@ export async function subscribeNewsletter(
   }
 
   const wasUnsubscribed = existing?.status === 'unsubscribed'
+  let subscriberId = existing?.id as string | undefined
 
   if (existing) {
     const { error } = await supabase
@@ -52,45 +54,70 @@ export async function subscribeNewsletter(
       .eq('id', existing.id)
     if (error) return { ok: false, error: HaidihoErrors.generic }
   } else {
-    const { error } = await supabase.from('newsletter_subscribers').insert({
+    const row = {
       email: normalized,
       first_name: firstName ?? null,
       source,
-      status: 'active',
-    })
-    if (error) {
-      if (error.code === '42501') {
-        const admin = createAdminClient()
-        if (admin) {
-          const { error: adminErr } = await admin.from('newsletter_subscribers').insert({
-            email: normalized,
-            first_name: firstName ?? null,
-            source,
-            status: 'active',
-          })
-          if (adminErr) return { ok: false, error: HaidihoErrors.generic }
-        } else return { ok: false, error: HaidihoErrors.generic }
-      } else return { ok: false, error: HaidihoErrors.duplicate }
+      status: 'active' as const,
+    }
+
+    if (admin) {
+      const { data, error } = await admin
+        .from('newsletter_subscribers')
+        .insert(row)
+        .select('id')
+        .single()
+      if (error) return { ok: false, error: HaidihoErrors.generic }
+      subscriberId = data?.id
+    } else {
+      const { error } = await supabase.from('newsletter_subscribers').insert(row)
+      if (error) {
+        return { ok: false, error: error.code === '23505' ? HaidihoErrors.duplicate : HaidihoErrors.generic }
+      }
     }
   }
 
-  try {
-    const { data: sub } = await supabase
+  // RLS blocks anon SELECT on newsletter_subscribers — always resolve id via service role
+  if (!subscriberId && admin) {
+    const { data } = await admin
       .from('newsletter_subscribers')
       .select('id')
       .eq('email', normalized)
       .single()
-    if (sub?.id) {
-      await sendWelcomeEmailWithToken(normalized, sub.id as string, firstName, wasUnsubscribed)
+    subscriberId = data?.id
+  }
+
+  let emailSent = false
+  if (subscriberId) {
+    try {
+      const sendResult = await sendWelcomeEmailWithToken(
+        normalized,
+        subscriberId,
+        firstName,
+        wasUnsubscribed,
+      )
+      emailSent = sendResult && 'ok' in sendResult && sendResult.ok === true
+      if (sendResult && 'skipped' in sendResult && sendResult.skipped) {
+        console.error(
+          '[newsletter] welcome email skipped — check RESEND_API_KEY and RESEND_FROM_EMAIL on the server',
+        )
+      }
+    } catch (err) {
+      console.error('[newsletter] welcome email failed:', err)
     }
-  } catch {
-    // non-blocking
+  } else {
+    console.error(
+      '[newsletter] welcome email skipped — no subscriber id (set SUPABASE_SERVICE_ROLE_KEY)',
+    )
   }
 
   return {
     ok: true,
+    emailSent,
     message: wasUnsubscribed
       ? "Welcome back — you're on the list again. ❤️"
-      : "You're officially in the neighborhood. Hai is doing a little dance. ❤️",
+      : emailSent
+        ? "You're officially in the neighborhood. Check your inbox — Hai is doing a little dance. ❤️"
+        : "You're on the list. If the welcome email doesn't show up in a few minutes, check spam or try again later. ❤️",
   }
 }

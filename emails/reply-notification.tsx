@@ -18,7 +18,7 @@ export default function ReplyNotificationEmail({
   postExcerpt,
   replyExcerpt,
 }: ReplyNotificationEmailProps) {
-  const assets = getEmailAssets(siteUrl)
+  const assets = getEmailAssets()
   const boardUrl = `${assets.site}/neighborhood`
 
   return (

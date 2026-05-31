@@ -7,7 +7,7 @@ export default async function HomePage() {
   const latestStrip = await fetchHomeLatestStrip()
 
   return (
-    <div className="mx-auto flex min-h-screen w-full max-w-[1024px] flex-1 flex-col px-3 py-4 sm:px-6 lg:px-10">
+    <div className="site-container flex min-h-screen flex-1 flex-col py-4 sm:py-6">
       <SiteHeader embedded />
       <HeroSection latestStrip={latestStrip} />
       <SoWhatSection />

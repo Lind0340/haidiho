@@ -11,7 +11,7 @@ type Props = {
 export function MugWallPage({ mugs, featuredId }: Props) {
   return (
     <div className="overflow-x-clip px-3 pb-12 pt-3 sm:px-6 sm:pb-10 lg:px-10">
-      <div className="mx-auto w-full max-w-[1024px]">
+      <div className="site-container">
         <div className="grid items-start gap-5 lg:grid-cols-[minmax(0,298px)_minmax(0,1fr)] lg:gap-[10px]">
           <div>
             <MugWallIntro />

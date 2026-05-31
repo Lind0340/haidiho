@@ -33,6 +33,11 @@
 }
 
 @layer utilities {
+  /** Main content column — grows on xl/2xl so large monitors aren’t mostly empty margin */
+  .site-container {
+    @apply mx-auto w-full max-w-[1024px] px-3 sm:px-6 lg:px-8 xl:max-w-[1240px] xl:px-10 2xl:max-w-[1320px] 2xl:px-12;
+  }
+
   .text-balance {
     text-wrap: balance;
   }

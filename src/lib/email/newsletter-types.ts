@@ -1,6 +1,6 @@
-import { getSiteUrl } from '@/lib/site-url'
+import { getEmailLinkUrl, getEmailSiteUrl, getSiteUrl } from '@/lib/site-url'
 
-export { getSiteUrl }
+export { getSiteUrl, getEmailLinkUrl, getEmailSiteUrl }
 
 /** Props for the weekly React Email template and admin composer. */
 
@@ -110,15 +110,16 @@ export function rowDifferences(row: NewsletterIssueRow): WeeklyNewsletterProps['
 
 export function issueRowToNewsletterProps(
   row: NewsletterIssueRow,
-  siteUrl = getSiteUrl(),
+  siteUrl = getEmailLinkUrl(),
   neighborhoodPosts: NeighborhoodPostCard[] = [],
   unsubscribeUrl?: string,
 ): WeeklyNewsletterProps {
   const base = siteUrl.replace(/\/$/, '')
+  const assetBase = getEmailSiteUrl()
   const newsletterImage =
     row.newsletter_strip_url?.trim() ||
     row.strip_newsletter_image_url?.trim() ||
-    `${base}/images/strip-card.png`
+    `${assetBase}/images/strip-card.png`
 
   const issueDate = row.issue_date
     ? new Date(row.issue_date + 'T12:00:00').toLocaleDateString('en-US', {
@@ -142,7 +143,7 @@ export function issueRowToNewsletterProps(
       row.opening_line?.trim() ||
       "Hey. Good week? Either way here's the good stuff. ❤️",
     strip: {
-      siteImageUrl: row.strip_site_image_url?.trim() || `${base}/images/strip-card.png`,
+      siteImageUrl: row.strip_site_image_url?.trim() || `${assetBase}/images/strip-card.png`,
       newsletterImageUrl: newsletterImage,
       pageUrl: row.strip_page_url?.trim() || `${base}/strip`,
       waterCoolerUrl: `${base}/neighborhood/water_cooler`,

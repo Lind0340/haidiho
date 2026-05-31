@@ -25,7 +25,7 @@ export default function PostApprovedEmail({
   postExcerpt,
   room,
 }: PostApprovedEmailProps) {
-  const assets = getEmailAssets(siteUrl)
+  const assets = getEmailAssets()
   const boardUrl = `${assets.site}/neighborhood`
 
   return (

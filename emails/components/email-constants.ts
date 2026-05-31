@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react'
+import { getEmailLinkUrl, getEmailSiteUrl } from '@/lib/site-url'
 
 /** Haidiho transactional email design tokens */
 export const EMAIL = {
@@ -24,13 +25,14 @@ export const EMAIL = {
 
 export const EMAIL_FONT = 'Arial, Helvetica, sans-serif'
 
-export function getEmailAssets(siteUrl: string) {
-  const base = siteUrl.replace(/\/$/, '')
+/** Absolute asset URLs for email clients — always a public origin, never localhost. */
+export function getEmailAssets() {
+  const base = getEmailSiteUrl()
   return {
     logo: `${base}/images/haidiho-wordmark-transparent.png`,
     hai: `${base}/images/hai-there-chat-icon.png`,
     diho: `${base}/images/diho-there-chat-icon-v2.png`,
-    site: base,
+    site: getEmailLinkUrl(),
   }
 }
 

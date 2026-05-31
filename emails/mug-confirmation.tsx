@@ -16,7 +16,7 @@ export type MugConfirmationEmailProps = {
 }
 
 export default function MugConfirmationEmail({ siteUrl, memberName }: MugConfirmationEmailProps) {
-  const assets = getEmailAssets(siteUrl)
+  const assets = getEmailAssets()
   const mugsUrl = `${assets.site}/mugs`
 
   return (

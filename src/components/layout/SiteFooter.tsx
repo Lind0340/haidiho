@@ -5,7 +5,7 @@ import { LegalFooterLinks } from '@/components/legal/LegalFooterLinks'
 export function SiteFooter() {
   return (
     <footer className="relative mt-auto w-full pt-6">
-      <div className="mx-auto w-full max-w-[1024px] px-3 sm:px-6 lg:px-10">
+      <div className="site-container">
         <section className="px-1 pb-10 pt-2 sm:px-[62px] sm:pb-16 sm:pt-3">
           <FeatureCardRow />
           <LegalFooterLinks />
